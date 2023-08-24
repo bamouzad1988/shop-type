@@ -1,0 +1,30 @@
+// shadows
+$btnShadow: 0px 0px 5px #00000012;
+$subMenuShadow: 0px 10px 10px -15px rgba(0, 0, 0, 0.75);
+
+// borders
+$searchBorder: 1px solid #eee;
+@layer base {
+  :root {
+    --color-main: #f7941d;
+    --color-text: #333;
+    --color-border: #f0f0f0;
+    --color-text-secondary: #333;
+    --color-section-title: #2c2d3f;
+    --color-product-text: #424646;
+    --color-page-back: #f6f7fb;
+    --color-white: #fff;
+    // mui
+    // --mui-palette-primary-main: #f7941d;
+    // --mui-palette-primary-text: #333;
+    // --mui-palette-primary-border: #f0f0f0;
+    // --mui-palette-primary-text-secondary: #333;
+    // --mui-palette-primary-section-title: #2c2d3f;
+    // --mui-palette-primary-product-text: #424646;
+    // --mui-palette-primary-page-back: #f6f7fb;
+    // --mui-palette-primary-white: #fff;
+  }
+  .dark {
+    --color-page-back: red;
+  }
+}
