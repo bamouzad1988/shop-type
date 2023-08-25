@@ -14,7 +14,7 @@ function TopBar() {
 
   return (
     <div className=" xs:mt-1 xs:mb-2">
-      <i className="ti-menu xs:hidden absolute z-30 group top-1 left-1 text-custom-white peer"></i>
+      <i className="ti-menu cursor-pointer xs:hidden absolute z-30 group top-1 left-1 text-custom-white peer"></i>
       <div
         className={`${classes.main} peer-hover:scale-y-100 peer-hover:[&>ul]:opacity-100`}
       >

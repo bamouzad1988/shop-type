@@ -1,7 +1,3 @@
-// shadows
-$btnShadow: 0px 0px 5px #00000012;
-$subMenuShadow: 0px 10px 10px -15px rgba(0, 0, 0, 0.75);
-
 // borders
 $searchBorder: 1px solid #eee;
 @layer base {
@@ -23,6 +19,9 @@ $searchBorder: 1px solid #eee;
     // --mui-palette-primary-product-text: #424646;
     // --mui-palette-primary-page-back: #f6f7fb;
     // --mui-palette-primary-white: #fff;
+    // shadows
+    --shadow-btnShadow: 0px 0px 5px #00000012;
+    --shadow-subMenuShadow: 0px 3px 5px #3333334d;
   }
   .dark {
     --color-page-back: red;
