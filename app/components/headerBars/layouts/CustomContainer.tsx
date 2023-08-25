@@ -7,7 +7,7 @@ function CustomContainer({ children, hasBorder }: Props) {
     : "";
   return (
     <div className={parentDivClasses}>
-      <div className="container mx-auto max-w-7xl py-3  ">{children}</div>
+      <div className="container mx-auto max-w-7xl ">{children}</div>
     </div>
   );
 }

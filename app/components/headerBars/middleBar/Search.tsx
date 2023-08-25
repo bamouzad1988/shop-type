@@ -8,6 +8,7 @@ function Search() {
         <i className="ti-search "></i>
       </button>
       <TextField
+        className="sm:w-[unset] w-full"
         InputProps={{
           sx: { borderRadius: 0, height: 40 },
         }}

@@ -11,25 +11,23 @@ import image2 from "@/public/images/blog/blog2.jpg";
 
 function Card() {
   const classes = {
-    link: "font-iransans-regular  text-xs text-custom-white xs:text-custom-text hover:text-custom-textSecondary xs:hover:text-custom-main transition-colors ease-in-out duration-300",
+    link: "font-iransans-regular text-xs text-custom-white xs:text-custom-text hover:text-custom-textSecondary xs:hover:text-custom-main transition-colors ease-in-out duration-300",
     ListDivClassess:
-      "opacity-0 absolute top-[100px] hover:top-[20px] hover:opacity-100 left-0 cursor-default w-[300px] bg-custom-white p-8 shadow-md  transition-all duration-300 group-hover:opacity-100 group-hover:top-[30px] ",
+      " absolute top-[20px] z-20 origin-top scale-y-0 left-0 cursor-default w-[300px] bg-custom-white p-8 shadow-md hover:scale-y-100 transition-all duration-300 ",
   };
   return (
-    <div className="relative">
+    <div className="relative ">
       <Badge
         badgeContent={2}
         color="primary"
-        className="relative cursor-pointer group peer"
+        className="relative cursor-pointer peer "
         onFocus={(e) => {
           e.stopPropagation();
         }}
       >
         <ShoppingCartOutlinedIcon color="action" />
       </Badge>
-      <div
-        className={`${classes.ListDivClassess} peer-hover:top-[20px] peer-hover:opacity-100`}
-      >
+      <div className={`${classes.ListDivClassess}  peer-hover:scale-y-100`}>
         <div className="flex justify-between border-b border-custom-border pb-4">
           <div>
             <span>2</span>
@@ -50,9 +48,7 @@ function Card() {
               />
             </div>
             <div>
-              <Link href="/" className={classes.link}>
-                <h6 className="text-sm">کفش زنانه مدل زیمباوه</h6>
-              </Link>
+              <h6 className="text-sm">کفش زنانه مدل زیمباوه</h6>
               <div className="text-left my-1  text-custom-textSecondary">
                 <span>1x</span>
                 <span>-</span>
@@ -84,9 +80,7 @@ function Card() {
               />
             </div>
             <div>
-              <Link href="/" className={classes.link}>
-                <h6 className="text-sm">کفش زنانه مدل زیمباوه</h6>
-              </Link>
+              <h6 className="text-sm">کفش زنانه مدل زیمباوه</h6>
               <div className="text-left my-1  text-custom-textSecondary">
                 <span>1x</span>
                 <span>-</span>
