@@ -1,5 +1,5 @@
-import Category from "../../../middleBar/Category";
-import Search from "../../../middleBar/Search";
+import Category from "@/app/components/headerBars/middleBar/Category";
+import Search from "@/app/components/headerBars/middleBar/Search";
 
 function SearchAndCategory() {
   return (

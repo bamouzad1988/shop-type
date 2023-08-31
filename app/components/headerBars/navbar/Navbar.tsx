@@ -1,5 +1,5 @@
 import { Events } from "@/app/types/props.module";
-import CustomContainer from "../layouts/CustomContainer";
+import CustomContainer from "../../layout/CustomContainer";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -26,7 +26,71 @@ function Navbar() {
       <div className="w-full duration-300 transition-all origin-top top-[38px] sm:bg-custom-text block sm:relative absolute sm:scale-y-100 scale-y-0 hover:scale-y-100 peer-hover:scale-y-100">
         <CustomContainer hasBorder={false}>
           <ul className="flex sm:flex-row  text-custom-white bg-custom-text sm:items-center sm:px-3 sm:h-[54px] flex-col ">
-            <li className="">دسته بندی ها</li>
+            <li className="relative sm:w-[260px] w-full group/category ml-5 cursor-pointer items-center sm:h-full h-[45px] px-4 sm:bg-custom-main flex font-iransans-demibold bg-transparent">
+              <i className="ti-menu ml-4 text-xl "></i>
+              دسته بندی ها
+              <ul
+                className={`${classes.subMenuClasses} w-[260px] right-0  group-hover/category:opacity-100 top-[55px] group-hover/category:scale-y-100`}
+              >
+                <li className="group/digital relative ">
+                  <span
+                    className={`${classes.subMenuLinkClasses} flex items-center`}
+                  >
+                    کالای دیجیتال
+                    <i className="ti-angle-left text-xxs absolute left-0"></i>
+                    <ul
+                      className={`${classes.subMenuClasses} top-0  xs:right-[240px] right-16 group-hover/digital:opacity-100 group-hover/digital:scale-y-100`}
+                    >
+                      <li>
+                        <Link href="/" className={classes.subMenuLinkClasses}>
+                          موبایل
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/" className={classes.subMenuLinkClasses}>
+                          تبلت
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/" className={classes.subMenuLinkClasses}>
+                          لپ تاپ
+                        </Link>
+                      </li>
+                    </ul>
+                  </span>
+                </li>
+                <li>
+                  <Link href="/" className={classes.subMenuLinkClasses}>
+                    خانه و آشپزخانه
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className={classes.subMenuLinkClasses}>
+                    مد و پوشاک
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className={classes.subMenuLinkClasses}>
+                    کالاهای سوپرمارکتی
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className={classes.subMenuLinkClasses}>
+                    کتاب و لوازم التحریر
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className={classes.subMenuLinkClasses}>
+                    زیبایی وسلامت
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/" className={classes.subMenuLinkClasses}>
+                    ورزش و سفر
+                  </Link>
+                </li>
+              </ul>
+            </li>
             <li className="h-full">
               <Link
                 href="/"

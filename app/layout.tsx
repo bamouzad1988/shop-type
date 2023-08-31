@@ -3,7 +3,7 @@ import "./styles/main.scss";
 import "@/public/fonts/themify-icons/themify-icons.css";
 
 import type { Metadata } from "next";
-import MyHeader from "./components/headerBars/layouts/header/MyHeader";
+import MyHeader from "./components/layout/header/MyHeader";
 export const metadata: Metadata = {
   title: "Nice Shop",
   description: "Created By Nice Shop Team",

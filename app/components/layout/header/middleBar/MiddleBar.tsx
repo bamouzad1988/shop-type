@@ -1,7 +1,7 @@
 import Logo from "@/app/components/headerBars/middleBar/Logo";
 import SearchAndCategory from "./SearchAndCategory";
-import CustomContainer from "../../CustomContainer";
 import CardAndProfile from "./CartAndProfile";
+import CustomContainer from "../../CustomContainer";
 
 function MiddleBar() {
   return (
