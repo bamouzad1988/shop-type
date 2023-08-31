@@ -18,7 +18,6 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <body>
         <MyHeader />
-
         {children}
       </body>
     </html>
