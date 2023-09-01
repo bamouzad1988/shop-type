@@ -1,3 +1,5 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+
 export interface Props {
   children: React.ReactNode;
   hasBorder?: boolean;
@@ -7,7 +9,7 @@ export interface BannerProps {
   title: string;
   link: string;
   linkText: string;
-  image: string;
+  image: StaticImport;
 }
 
 export type Events<Value = string> =

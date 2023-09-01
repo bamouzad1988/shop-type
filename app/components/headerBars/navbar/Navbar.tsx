@@ -15,7 +15,7 @@ function Navbar() {
     linkClasses:
       "text-sm h-full sm:py-0 py-3 flex items-center hover:bg-custom-main px-4 duration-300 transition-colors border-0 sm:border-x border-custom-text",
     subMenuClasses:
-      "text-sm bg-custom-white scale-y-0 opacity-0 p-2 min-w-[200px] text-custom-text absolute shadow-md duration-300 origin-top transition-all top0 z-10",
+      "text-sm bg-custom-white scale-y-0 opacity-0 p-2 min-w-[200px] text-custom-text absolute shadow-md duration-300 origin-top transition-all z-10",
     subMenuLinkClasses:
       " block py-2 px-4 block hover:bg-custom-main hover:text-custom-white duration-300 transition-all",
   };
