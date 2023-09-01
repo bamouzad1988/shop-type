@@ -4,6 +4,15 @@ export interface Props {
   children: React.ReactNode;
   hasBorder?: boolean;
 }
+export interface CenteredTitleProps {
+  title: string;
+}
+export interface TreandingTabProps {
+  title: string;
+  isActive?: boolean;
+  onClick: () => void;
+}
+
 export interface BannerProps {
   overTitle: string;
   title: string;
@@ -14,4 +23,5 @@ export interface BannerProps {
 
 export type Events<Value = string> =
   | (Event & { target: { value: Value; name: string } })
-  | React.ChangeEvent<HTMLInputElement>;
+  | React.ChangeEvent<HTMLInputElement>
+  | HTMLParagraphElement;
