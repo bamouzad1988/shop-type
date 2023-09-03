@@ -4,7 +4,7 @@ import SuggestionList from "./SuggestionList";
 function Suggestion() {
   return (
     <div className="flex justify-start flex-wrap">
-      <div className="px-3 w-1/3 md:w-1/2 xxs:w-full">
+      <div className="px-3 mt-5 w-1/3 md:w-1/2 xxs:w-full">
         <Title
           textSize="medium"
           position="right"
@@ -13,7 +13,7 @@ function Suggestion() {
         />
         <SuggestionList />
       </div>
-      <div className="px-3 w-1/3 md:w-1/2 xxs:w-full">
+      <div className="px-3 mt-5 w-1/3 md:w-1/2 xxs:w-full">
         <Title
           textSize="medium"
           position="right"
@@ -22,7 +22,7 @@ function Suggestion() {
         />
         <SuggestionList />
       </div>
-      <div className="px-3 w-1/3 md:w-1/2 xxs:w-full">
+      <div className="px-3 mt-5 w-1/3 md:w-1/2 xxs:w-full">
         <Title
           textSize="medium"
           position="right"

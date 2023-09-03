@@ -17,3 +17,10 @@
     -webkit-box-orient: vertical;
   }
 }
+// suggestion
+.suggestion-product {
+  &-image {
+    aspect-ratio: 13/16;
+    width: 48%;
+  }
+}

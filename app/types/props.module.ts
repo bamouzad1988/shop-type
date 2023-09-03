@@ -8,7 +8,7 @@ export interface TitleProps {
   title: string;
   position: string;
   hasUnderline: boolean;
-  textSize: any;
+  textSize: string;
 }
 export interface TreandingTabProps {
   title: string;
