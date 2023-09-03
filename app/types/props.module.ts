@@ -4,8 +4,11 @@ export interface Props {
   children: React.ReactNode;
   hasBorder?: boolean;
 }
-export interface CenteredTitleProps {
+export interface TitleProps {
   title: string;
+  position: string;
+  hasUnderline: boolean;
+  textSize: any;
 }
 export interface TreandingTabProps {
   title: string;
@@ -13,6 +16,13 @@ export interface TreandingTabProps {
   onClick: () => void;
 }
 
+export interface BestsellingProps {
+  discount?: number;
+  title: string;
+  price: number;
+  image: StaticImport;
+}
+//    image
 export interface BannerProps {
   overTitle: string;
   title: string;
