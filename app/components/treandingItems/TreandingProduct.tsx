@@ -14,7 +14,7 @@ import { seprateNumbers } from "./../../functions/functions";
 function TreandingProduct(props: BestsellingProps) {
   const { discount, title, price, image } = props;
 
-  const output = seprateNumbers(price);
+  const sepratedPrice = seprateNumbers(price);
 
   return (
     <div className="treanding-product px-3 my-4 w-full md:w-1/3 xxl:w-1/4 h-auto relative">
@@ -23,8 +23,8 @@ function TreandingProduct(props: BestsellingProps) {
       </Link>
       <div className=" p-2 bg-custom-border">
         <p className="treanding-product-details">{title}</p>
-        <div className="mt-1 text-left">
-          <span>{output}</span>
+        <div className="text-left text-custom-textSecondary mt-2">
+          <span>{sepratedPrice}</span>
           <Toman />
         </div>
       </div>
