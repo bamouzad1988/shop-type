@@ -21,7 +21,7 @@ function Navbar() {
   };
 
   return (
-    <div className="relative w-full mt-4 sm:mt-0 sm:h-[92px] h-[35px]">
+    <div className="relative w-full mt-4 sm:mt-0 sm:h-[92px] h-[35px] z-10">
       <i className="ti-menu cursor-pointer sm:hidden absolute z-30 peer top-1 left-1 text-custom-main text-3xl"></i>
       <div className="w-full duration-300 transition-all origin-top top-[38px] sm:bg-custom-text block sm:relative absolute sm:scale-y-100 scale-y-0 hover:scale-y-100 peer-hover:scale-y-100">
         <CustomContainer hasBorder={false}>
