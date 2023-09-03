@@ -22,7 +22,11 @@ export interface BestsellingProps {
   price: number;
   image: StaticImport;
 }
-//    image
+export interface SuggestionProps {
+  title: string;
+  price: number;
+  image: StaticImport;
+}
 export interface BannerProps {
   overTitle: string;
   title: string;
