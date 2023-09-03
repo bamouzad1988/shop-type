@@ -1,4 +1,4 @@
-import { Events } from "@/app/types/props.module";
+import React from "react";
 import CustomContainer from "../../layout/CustomContainer";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,7 +7,7 @@ function Navbar() {
   const pathname = usePathname();
   const path = pathname.split("/")[1];
 
-  const linkHandleClick = (e: Events) => {
+  const linkHandleClick = (e: any) => {
     e.preventDefault();
   };
 
@@ -114,7 +114,7 @@ function Navbar() {
             <li className="h-full relative group/shop ">
               <Link
                 onClick={() => linkHandleClick}
-                href="/"
+                href="/sss"
                 className={`${classes.linkClasses} ${
                   (path === "checkout" || "cart") && "bg-custom-main"
                 }relative`}
@@ -126,7 +126,7 @@ function Navbar() {
                 className={`${classes.subMenuClasses} group-hover/shop:opacity-100 group-hover/shop:scale-y-100`}
               >
                 <li>
-                  <Link href="/" className={classes.subMenuLinkClasses}>
+                  <Link href="/blog" className={classes.subMenuLinkClasses}>
                     کارت
                   </Link>
                 </li>

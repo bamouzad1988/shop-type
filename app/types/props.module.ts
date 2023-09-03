@@ -37,5 +37,5 @@ export interface BannerProps {
 
 export type Events<Value = string> =
   | (Event & { target: { value: Value; name: string } })
-  | React.ChangeEvent<HTMLInputElement>
-  | HTMLParagraphElement;
+  | React.ChangeEvent<HTMLAnchorElement>
+  | HTMLAnchorElement;
