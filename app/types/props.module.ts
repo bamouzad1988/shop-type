@@ -22,6 +22,11 @@ export interface BestsellingProps {
   price: number;
   image: StaticImport;
 }
+export interface ShopServiceProps {
+  iconClass: string;
+  title: string;
+  subTitle: string;
+}
 export interface SlideProductProps extends BestsellingProps {}
 
 export interface SuggestionProps extends BestsellingProps {
