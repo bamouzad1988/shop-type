@@ -18,7 +18,6 @@ function Title({ title, position, hasUnderline, textSize }: TitleProps) {
     large: { small: "text-xl", mediumSize: "text-2xl", largeSize: "text-3xl" },
     medium: { small: "text-xl", mediumSize: "text-xl", largeSize: "text-xl" },
   };
-  //todo
   const smallSize = classes[textSize as keyof MyObj].small;
   // @ts-ignore
   const mediumSize = classes[textSize as keyof MyObj].mediumSize;

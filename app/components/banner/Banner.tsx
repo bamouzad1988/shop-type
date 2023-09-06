@@ -9,7 +9,9 @@ function Banner({ image, overTitle, title, link, linkText }: BannerProps) {
       <Image
         src={image}
         alt="user profile picture"
-        className="w-full h-full "
+        className="w-full h-full"
+        layout="responsive"
+        loading="lazy"
       />
       <div className="absolute top-[20px] pr-10 max-w-[60%]">
         <h6 className="text-custom-main text-sm">{overTitle}</h6>

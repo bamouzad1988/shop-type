@@ -1,18 +1,28 @@
+// next
 import Image from "next/image";
-import myImage from "@/public/images/products/thumbnail/shop-list1.jpg";
 import Link from "next/link";
+// components
 import Toman from "../reusableComponents/Toman";
+import Percent from "../reusableComponents/Percent";
+// functions
 import { seprateNumbers } from "@/app/functions/functions";
+// interfaces
 import { SuggestionProps } from "@/app/types/props.module";
 
 function SuggestionProduct(props: SuggestionProps) {
-  const { title, price, image } = props;
+  const { title, price, image, discount } = props;
   const output = seprateNumbers(price);
 
   return (
-    <div className="suggestion-product flex p-2 justify-between border-custom-border border mt-2">
+    <div className="suggestion-product relative flex p-2 justify-between border-custom-border border mt-2">
       <div className="suggestion-product-image">
-        <Image src={image} alt="dssad" className="w-full h-full" />
+        <Image
+          src={image}
+          alt="dssad"
+          className="w-full h-full"
+          layout="responsive"
+          loading="lazy"
+        />
       </div>
       <div className="w-[45%] pt-16">
         <h4 className="leading-5">
@@ -28,6 +38,12 @@ function SuggestionProduct(props: SuggestionProps) {
           <Toman color="text-custom-white" />
         </div>
       </div>
+      {discount && (
+        <span className="text-custom-white bg-custom-main px-2 py-1 font-iransans-demibold text-xs rounded-lg absolute top-2 left-3">
+          <Percent />
+          {discount}
+        </span>
+      )}
     </div>
   );
 }

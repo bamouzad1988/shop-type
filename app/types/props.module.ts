@@ -17,15 +17,15 @@ export interface TreandingTabProps {
 }
 
 export interface BestsellingProps {
-  discount?: number;
   title: string;
+  discount?: number;
   price: number;
   image: StaticImport;
 }
-export interface SuggestionProps {
-  title: string;
-  price: number;
-  image: StaticImport;
+export interface SlideProductProps extends BestsellingProps {}
+
+export interface SuggestionProps extends BestsellingProps {
+  discount?: number;
 }
 export interface BannerProps {
   overTitle: string;

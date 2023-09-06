@@ -7,10 +7,6 @@ function Navbar() {
   const pathname = usePathname();
   const path = pathname.split("/")[1];
 
-  const linkHandleClick = (e: any) => {
-    e.preventDefault();
-  };
-
   const classes = {
     linkClasses:
       "text-sm h-full sm:py-0 py-3 flex items-center hover:bg-custom-main px-4 duration-300 transition-colors border-0 sm:border-x border-custom-text",
@@ -113,8 +109,8 @@ function Navbar() {
             </li>
             <li className="h-full relative group/shop ">
               <Link
-                onClick={() => linkHandleClick}
-                href="/sss"
+                onClick={(e) => e.preventDefault()}
+                href="/blog"
                 className={`${classes.linkClasses} ${
                   (path === "checkout" || "cart") && "bg-custom-main"
                 }relative`}

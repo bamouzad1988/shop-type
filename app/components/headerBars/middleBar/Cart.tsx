@@ -44,6 +44,7 @@ function Card() {
                 alt="Image"
                 style={{ objectFit: "cover", width: "70px", height: "80px" }}
                 src={image1}
+                layout="responsive"
                 loading="lazy"
               />
             </div>
@@ -76,6 +77,7 @@ function Card() {
                 alt="Image"
                 style={{ objectFit: "cover", width: "70px", height: "80px" }}
                 src={image2}
+                layout="responsive"
                 loading="lazy"
               />
             </div>

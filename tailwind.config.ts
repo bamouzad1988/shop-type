@@ -30,6 +30,8 @@ const config: Config = {
         productText: "var(--color-product-text) ",
         pageBack: "var(--color-page-back) ",
         white: "var(--color-white) ",
+        gray: "var(--color-gray) ",
+        lightGray: "var(--color-lightGray) ",
       },
     },
     fontFamily: {

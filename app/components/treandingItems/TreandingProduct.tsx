@@ -18,8 +18,16 @@ function TreandingProduct(props: BestsellingProps) {
 
   return (
     <div className="treanding-product px-3 my-4 w-full md:w-1/3 xxl:w-1/4 h-auto relative">
-      <Link href="#" className="bg-custom-textSecondary h-full">
-        <Image src={image} alt={title} className="h-full w-full" />
+      <Link
+        href="#"
+        className="h-full group block overflow-hidden"
+      >
+        <Image
+          src={image}
+          alt={title}
+          className="h-full w-full group-hover:scale-110 transition-all duration-300"
+          loading="lazy"
+        />
       </Link>
       <div className=" p-2 bg-custom-border">
         <p className="treanding-product-details">{title}</p>
