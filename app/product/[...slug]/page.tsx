@@ -1,5 +1,13 @@
+import Head from "next/head";
 function ProduxtSlug() {
-  return <p>slug</p>;
+  return (
+    <>
+      <Head>
+        <title>جزییات محصول</title>
+      </Head>
+      <p>slug</p>
+    </>
+  );
 }
 
 export default ProduxtSlug;
