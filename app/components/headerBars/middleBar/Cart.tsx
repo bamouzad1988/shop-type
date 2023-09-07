@@ -44,7 +44,6 @@ function Card() {
                 alt="Image"
                 style={{ objectFit: "cover", width: "70px", height: "80px" }}
                 src={image1}
-                layout="responsive"
                 loading="lazy"
               />
             </div>
@@ -56,7 +55,7 @@ function Card() {
                 <span>50000000</span>
               </div>
               <div className="flex justify-end cursor-pointer ">
-                <span className="text-left border border-custom-border w-fit h-fit block hover:bg-custom-text hover:text-custom-white transition-colors duration-300">
+                <span className="text-left border border-custom-text w-fit h-fit block hover:bg-custom-text hover:text-custom-white transition-colors duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -77,7 +76,6 @@ function Card() {
                 alt="Image"
                 style={{ objectFit: "cover", width: "70px", height: "80px" }}
                 src={image2}
-                layout="responsive"
                 loading="lazy"
               />
             </div>
@@ -89,7 +87,7 @@ function Card() {
                 <span>50000000</span>
               </div>
               <div className="flex justify-end cursor-pointer ">
-                <span className="text-left border border-custom-border w-fit h-fit block hover:bg-custom-text hover:text-custom-white transition-colors duration-300">
+                <span className="text-left border border-custom-text w-fit h-fit block hover:bg-custom-text hover:text-custom-white transition-colors duration-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

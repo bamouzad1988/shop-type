@@ -27,6 +27,17 @@ export interface ShopServiceProps {
   title: string;
   subTitle: string;
 }
+export interface FooterTitleProps {
+  title: string;
+}
+export interface LinkLists {
+  text: string;
+  link: string;
+}
+export interface ListLinkProps {
+  title: string;
+  list: { text: string; link: string }[];
+}
 export interface SlideProductProps extends BestsellingProps {}
 
 export interface SuggestionProps extends BestsellingProps {

@@ -4,6 +4,7 @@ import "@/public/fonts/themify-icons/themify-icons.css";
 
 import type { Metadata } from "next";
 import MyHeader from "./components/layout/header/MyHeader";
+import Footer from "./components/layout/footer/Footer";
 export const metadata: Metadata = {
   title: "Nice Shop",
   description: "Created By Nice Shop Team",
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body>
         <MyHeader />
         {children}
+        <Footer />
       </body>
     </html>
   );
