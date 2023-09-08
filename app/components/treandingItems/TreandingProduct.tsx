@@ -9,7 +9,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { BestsellingProps } from "@/app/types/props.module";
 import Percent from "../reusableComponents/Percent";
 // functions
-import { seprateNumbers } from "./../../functions/functions";
+import { seprateNumbers } from "../../../lib/functions";
 
 function TreandingProduct(props: BestsellingProps) {
   const { discount, title, price, image } = props;
@@ -18,10 +18,7 @@ function TreandingProduct(props: BestsellingProps) {
 
   return (
     <div className="treanding-product px-3 my-4 w-full md:w-1/3 xxl:w-1/4 h-auto relative">
-      <Link
-        href="#"
-        className="h-full group block overflow-hidden"
-      >
+      <Link href="#" className="h-full group block overflow-hidden">
         <Image
           src={image}
           alt={title}

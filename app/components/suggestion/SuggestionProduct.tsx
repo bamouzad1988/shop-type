@@ -5,7 +5,7 @@ import Link from "next/link";
 import Toman from "../reusableComponents/Toman";
 import Percent from "../reusableComponents/Percent";
 // functions
-import { seprateNumbers } from "@/app/functions/functions";
+import { seprateNumbers } from "@/lib/functions";
 // interfaces
 import { SuggestionProps } from "@/app/types/props.module";
 

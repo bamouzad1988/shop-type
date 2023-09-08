@@ -10,6 +10,11 @@ export interface TitleProps {
   hasUnderline: boolean;
   textSize: string;
 }
+export interface SignupValidation {
+  minLength: number;
+  data: string;
+  type?: string;
+}
 export interface TreandingTabProps {
   title: string;
   isActive?: boolean;

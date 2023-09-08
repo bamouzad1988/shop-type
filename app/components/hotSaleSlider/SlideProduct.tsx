@@ -3,7 +3,7 @@ import myImage from "@/public/images/products/thumbnail/shop-list8.jpg";
 import myImage1 from "@/public/images/products/p2.jpg";
 import Link from "next/link";
 import Toman from "../reusableComponents/Toman";
-import { seprateNumbers } from "@/app/functions/functions";
+import { seprateNumbers } from "@/lib/functions";
 import Percent from "../reusableComponents/Percent";
 import { SlideProductProps } from "@/app/types/props.module";
 

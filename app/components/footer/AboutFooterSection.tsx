@@ -1,9 +1,28 @@
+"use client";
 import FooterSectionWrapper from "../reusableComponents/FooterSectionWrapper";
 import Link from "next/link";
 import logoImage from "@/public/images/logo2.png";
 import Image from "next/image";
 
 function AboutFooterSection() {
+  async function aa(
+    email: string = "bijan",
+    password: string = "sdsdsdsdfsdf"
+  ) {
+    const response = await fetch("/api/auth/ssss", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    return response;
+  }
+  aa("bijan", "sdfsdfsdfsdf")
+    .then((res) => res)
+    .then((ress) => console.log("done"))
+    .catch((err) => console.log("err"));
   return (
     <FooterSectionWrapper>
       <Link href="/" className="block mb-6">
