@@ -2,7 +2,7 @@ import Image from "next/image";
 import "./banner.scss";
 import Link from "next/link";
 
-import { BannerProps } from "@/app/types/props.module";
+import { BannerProps } from "@/types/props.module";
 function Banner({ image, overTitle, title, link, linkText }: BannerProps) {
   return (
     <div className="main bg-custom-main w-full h-auto relative aspect-video ">

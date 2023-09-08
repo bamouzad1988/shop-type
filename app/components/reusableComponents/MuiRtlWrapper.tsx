@@ -16,7 +16,7 @@ declare module "@mui/material/styles" {
   }
 }
 // types
-import { Props } from "@/app/types/props.module";
+import { Props } from "@/types/props.module";
 
 const theme = createTheme({
   direction: "rtl",

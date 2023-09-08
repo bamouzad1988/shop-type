@@ -1,4 +1,4 @@
-import { ShopServiceProps } from "@/app/types/props.module";
+import { ShopServiceProps } from "@/types/props.module";
 
 function ShopService(props: ShopServiceProps) {
   const { title, subTitle, iconClass } = props;

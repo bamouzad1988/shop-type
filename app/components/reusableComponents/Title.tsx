@@ -1,4 +1,4 @@
-import { TitleProps } from "@/app/types/props.module";
+import { TitleProps } from "@/types/props.module";
 
 function Title({ title, position, hasUnderline, textSize }: TitleProps) {
   interface SizeObject {

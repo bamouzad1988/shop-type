@@ -1,4 +1,4 @@
-import { FooterTitleProps } from "@/app/types/props.module";
+import { FooterTitleProps } from "@/types/props.module";
 
 function FooterTitle(props: FooterTitleProps) {
   const { title } = props;

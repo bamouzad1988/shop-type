@@ -1,4 +1,4 @@
-import { ListLinkProps } from "@/app/types/props.module";
+import { ListLinkProps } from "@/types/props.module";
 import FooterTitle from "./FooterTitle";
 import Link from "next/link";
 

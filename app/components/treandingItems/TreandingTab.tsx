@@ -1,6 +1,6 @@
 "use client";
 import React, { MouseEvent } from "react";
-import { TreandingTabProps } from "@/app/types/props.module";
+import { TreandingTabProps } from "@/types/props.module";
 
 function TreandingTab({ title, isActive, onClick }: TreandingTabProps) {
   const ActiveClass = isActive && "bg-custom-main text-custom-white";

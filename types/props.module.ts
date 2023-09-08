@@ -4,6 +4,12 @@ export interface Props {
   children: React.ReactNode;
   hasBorder?: boolean;
 }
+export interface RegisterValidation {
+  data: string;
+  minLength: number;
+  type: string;
+}
+
 export interface TitleProps {
   title: string;
   position: string;

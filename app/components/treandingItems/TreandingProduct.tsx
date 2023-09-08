@@ -6,7 +6,7 @@ import Toman from "../reusableComponents/Toman";
 // mui
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 // types
-import { BestsellingProps } from "@/app/types/props.module";
+import { BestsellingProps } from "@/types/props.module";
 import Percent from "../reusableComponents/Percent";
 // functions
 import { seprateNumbers } from "../../../lib/functions";

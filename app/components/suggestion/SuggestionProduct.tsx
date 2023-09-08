@@ -7,7 +7,7 @@ import Percent from "../reusableComponents/Percent";
 // functions
 import { seprateNumbers } from "@/lib/functions";
 // interfaces
-import { SuggestionProps } from "@/app/types/props.module";
+import { SuggestionProps } from "@/types/props.module";
 
 function SuggestionProduct(props: SuggestionProps) {
   const { title, price, image, discount } = props;

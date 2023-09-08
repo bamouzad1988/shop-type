@@ -5,7 +5,7 @@ import Link from "next/link";
 import Toman from "../reusableComponents/Toman";
 import { seprateNumbers } from "@/lib/functions";
 import Percent from "../reusableComponents/Percent";
-import { SlideProductProps } from "@/app/types/props.module";
+import { SlideProductProps } from "@/types/props.module";
 
 function SlideProduct(props: SlideProductProps) {
   const { price, discount, image, title } = props;

@@ -4,25 +4,27 @@ import Link from "next/link";
 import logoImage from "@/public/images/logo2.png";
 import Image from "next/image";
 
-function AboutFooterSection() {
+async function AboutFooterSection() {
   async function aa(
     email: string = "bijan",
     password: string = "sdsdsdsdfsdf"
   ) {
-    const response = await fetch("/api/auth/ssss", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-
-    return response;
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify({ email: email, password: password }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      return await response.text();
+    } catch (error) {
+      console.log("component error");
+    }
   }
-  aa("bijan", "sdfsdfsdfsdf")
-    .then((res) => res)
-    .then((ress) => console.log("done"))
-    .catch((err) => console.log("err"));
+  const ss = await aa("bijan", "sdfsdfsdfsdf");
+  console.log(ss);
+
   return (
     <FooterSectionWrapper>
       <Link href="/" className="block mb-6">

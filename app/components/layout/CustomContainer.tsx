@@ -1,5 +1,5 @@
 "use client";
-import { Props } from "@/app/types/props.module";
+import { Props } from "@/types/props.module";
 
 function CustomContainer({ children, hasBorder }: Props) {
   const parentDivClasses: string = hasBorder

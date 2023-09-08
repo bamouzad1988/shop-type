@@ -1,4 +1,4 @@
-import { LinkLists } from "@/app/types/props.module";
+import { LinkLists } from "@/types/props.module";
 import FooterSectionWrapper from "../reusableComponents/FooterSectionWrapper";
 import LinkList from "./LinkList";
 
