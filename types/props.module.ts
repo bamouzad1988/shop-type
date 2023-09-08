@@ -7,7 +7,7 @@ export interface Props {
 export interface RegisterValidation {
   data: string;
   minLength: number;
-  type: string;
+  type?: string;
 }
 
 export interface TitleProps {

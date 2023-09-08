@@ -5,25 +5,55 @@ import logoImage from "@/public/images/logo2.png";
 import Image from "next/image";
 
 async function AboutFooterSection() {
-  async function aa(
-    email: string = "bijan",
-    password: string = "sdsdsdsdfsdf"
-  ) {
-    try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        body: JSON.stringify({ email: email, password: password }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      return await response.text();
-    } catch (error) {
-      console.log("component error");
-    }
-  }
-  const ss = await aa("bijan", "sdfsdfsdfsdf");
-  console.log(ss);
+  // changePassword
+  // async function changePassword(
+  //   email: string = "bijan@123",
+  //   oldPassword: string = "sdsdsdsdfsdf",
+  //   password: string = "sdsdsdsdfsdf"
+  // ) {
+  //   try {
+  //     const response = await fetch("/api/user/changePassword", {
+  //       method: "PATCH",
+  //       body: JSON.stringify({
+  //         email: email,
+  //         password: password,
+  //         oldPassword: oldPassword,
+  //       }),
+  //       headers: {
+  //         "Content-type": "application/json; charset=UTF-8",
+  //       },
+  //     });
+  //     return await response.text();
+  //   } catch (error) {
+  //     console.log("component error");
+  //   }
+  // }
+  // const ss = await changePassword(
+  //   "bijan@123.",
+  //   "sdfsdfsdfsdf",
+  //   "sdfsdfsdfsdf11111"
+  // );
+  // console.log(ss);
+  //register
+  // async function register(
+  //   email: string = "bijan@123",
+  //   password: string = "sdsdsdsdfsdf"
+  // ) {
+  //   try {
+  //     const response = await fetch("/api/auth/signup", {
+  //       method: "POST",
+  //       body: JSON.stringify({ email: email, password: password }),
+  //       headers: {
+  //         "Content-type": "application/json; charset=UTF-8",
+  //       },
+  //     });
+  //     return await response.text();
+  //   } catch (error) {
+  //     console.log("component error");
+  //   }
+  // }
+  // const ss = await register("bijan@123", "sdfsdfsdfsdf");
+  // console.log(ss);
 
   return (
     <FooterSectionWrapper>
