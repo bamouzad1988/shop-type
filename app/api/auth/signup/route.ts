@@ -4,6 +4,8 @@ import { MongoClient } from "mongodb";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
+  const dbUsername = process.env.MONGOUSERNAME;
+  const dbPassword = process.env.MONGOPASSWORD;
   try {
     const body = await request.json();
     // get data from rquest body
@@ -24,9 +26,10 @@ export async function POST(request: Request) {
     }
     // hash password
     const hashedPassword = await hashPassword(password);
+
     // connect to db
     const client = await MongoClient.connect(
-      `mongodb+srv://b_amouzad1988:B1ttQu2H9ntG8vWT@cluster1.e9a3rna.mongodb.net/?retryWrites=true&w=majority`
+      `mongodb+srv://${dbUsername}:${dbPassword}@cluster1.e9a3rna.mongodb.net/?retryWrites=true&w=majority`
     );
     const db = client.db("niceshop");
     // check if user exist or not
