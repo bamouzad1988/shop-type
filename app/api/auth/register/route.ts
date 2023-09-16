@@ -9,19 +9,19 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     // get data from rquest body
-    const { email, password } = body;
+    const { username, password } = body;
     // validation
-    const isValidEmail = validation({
-      data: email,
+    const isValidUsername = validation({
+      data: username,
       minLength: 4,
-      type: "email",
+      type: "username",
     });
     const isValidpassword = validation({
       data: password,
       minLength: 7,
       type: "password",
     });
-    if (!isValidEmail || !isValidpassword) {
+    if (!isValidUsername || !isValidpassword) {
       return new NextResponse("invalid data", { status: 400 });
     }
     // hash password
@@ -33,14 +33,16 @@ export async function POST(request: Request) {
     );
     const db = client.db("niceshop");
     // check if user exist or not
-    const existingUser = await db.collection("users").findOne({ email: email });
+    const existingUser = await db
+      .collection("users")
+      .findOne({ username: username });
     if (existingUser) {
       await client.close();
       return new NextResponse("you signed before", { status: 400 });
     }
     // create new user
     const result = await db.collection("users").insertOne({
-      email: email,
+      username: username,
       password: hashedPassword,
     });
     // close connection

@@ -11,6 +11,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 // components
 import MuiRtlWrapper from "@/app/components/reusableComponents/MuiRtlWrapper";
+import CustomContainer from "../layout/CustomContainer";
+import ShowMessage from "../reusableComponents/ShowMessage";
 // next
 import { redirect } from "next/navigation";
 import Image from "next/image";
@@ -19,8 +21,6 @@ import { signIn } from "next-auth/react";
 import Logo from "@/public/images/logo.png";
 // react
 import { useEffect, useState } from "react";
-import ShowMessage from "../components/reusableComponents/ShowMessage";
-import CustomContainer from "../components/layout/CustomContainer";
 
 interface IFormInput {
   username: string;
@@ -30,7 +30,7 @@ const schema = registerValidationSchema;
 
 // type FormData = yup.InferType<typeof schema>;
 
-function Register() {
+function AuthForm() {
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
   const [redirectPage, setRedirectPage] = useState(false);
@@ -60,33 +60,24 @@ function Register() {
       text: "",
       type: "",
     });
-    //register
-    axios
-      .post(
-        "/api/auth/register",
-        {
-          username: username,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        }
-      )
+    //register or login
+    signIn("credentials", {
+      redirect: false,
+      username: username,
+      password: password,
+    })
       .then((response) => {
-        if (response.status === 200) {
+        alert("then");
+        if (!response.error) {
           setMessage({
             status: true,
             text: "ثبت نام با موفقیت انجام شد.",
             type: "success",
           });
-          setTimeout(() => {
-            setRedirectPage(true);
-          }, 5000);
         }
       })
       .catch(function (error) {
+        alert("catch");
         const hasError = error?.response?.data;
         if (hasError) {
           switch (hasError) {
@@ -186,4 +177,4 @@ function Register() {
     </form>
   );
 }
-export default Register;
+export default AuthForm;

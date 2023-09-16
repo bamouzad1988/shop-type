@@ -34,26 +34,6 @@ async function AboutFooterSection() {
   //   "sdfsdfsdfsdf11111"
   // );
   // console.log(ss);
-  //register
-  // async function register(
-  //   email: string = "bijan@123",
-  //   password: string = "sdsdsdsdfsdf"
-  // ) {
-  //   try {
-  //     const response = await fetch("/api/auth/signup", {
-  //       method: "POST",
-  //       body: JSON.stringify({ email: email, password: password }),
-  //       headers: {
-  //         "Content-type": "application/json; charset=UTF-8",
-  //       },
-  //     });
-  //     return await response.text();
-  //   } catch (error) {
-  //     console.log("component error");
-  //   }
-  // }
-  // const ss = await register("bijan@123", "sdfsdfsdfsdf");
-  // console.log(ss);
 
   return (
     <FooterSectionWrapper>

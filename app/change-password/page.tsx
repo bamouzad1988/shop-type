@@ -1,45 +1,35 @@
 "use client";
-// axios
 import axios from "axios";
-// schema validation
-import { registerValidationSchema } from "@/lib/yupValidationSchema";
+// yup
+import { changePasswordValidationSchema } from "./../../lib/yupValidationSchema";
 // react hoock form
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // mui
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 // components
-import MuiRtlWrapper from "@/app/components/reusableComponents/MuiRtlWrapper";
+import MuiRtlWrapper from "../components/reusableComponents/MuiRtlWrapper";
+import CustomContainer from "../components/layout/CustomContainer";
 // next
-import { redirect } from "next/navigation";
 import Image from "next/image";
-import { signIn } from "next-auth/react";
 // files
 import Logo from "@/public/images/logo.png";
-// react
-import { useEffect, useState } from "react";
 import ShowMessage from "../components/reusableComponents/ShowMessage";
-import CustomContainer from "../components/layout/CustomContainer";
+import { useState } from "react";
 
 interface IFormInput {
   username: string;
-  password: string;
+  newPassword: string;
+  oldPassword: string;
 }
-const schema = registerValidationSchema;
+const schema = changePasswordValidationSchema;
 
 // type FormData = yup.InferType<typeof schema>;
 
-function Register() {
+function ChangePassword() {
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
-  const [redirectPage, setRedirectPage] = useState(false);
-
-  useEffect(() => {
-    if (redirectPage) {
-      redirect("/");
-    }
-  }, [redirectPage]);
 
   const {
     control,
@@ -47,14 +37,17 @@ function Register() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: "",
-      password: "",
+      newPassword: "",
+      oldPassword: "",
     },
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = ({ username, password }) => {
-    // setDisableButton(true);
+  const onSubmit: SubmitHandler<IFormInput> = ({
+    newPassword,
+    oldPassword,
+  }) => {
+    setDisableButton(true);
     setMessage({
       status: false,
       text: "",
@@ -63,10 +56,11 @@ function Register() {
     //register
     axios
       .post(
-        "/api/auth/register",
+        "/api/auth/user/change-password",
         {
-          username: username,
-          password: password,
+            username:"",
+            oldPassword: oldPassword,
+          newPassword: newPassword,
         },
         {
           headers: {
@@ -78,12 +72,9 @@ function Register() {
         if (response.status === 200) {
           setMessage({
             status: true,
-            text: "ثبت نام با موفقیت انجام شد.",
+            text: " تغییر کلمه عبور با موفقیت انجام شد.",
             type: "success",
           });
-          setTimeout(() => {
-            setRedirectPage(true);
-          }, 5000);
         }
       })
       .catch(function (error) {
@@ -131,11 +122,12 @@ function Register() {
               <Image src={Logo} alt="Nice Shop" />
             </div>
             <h2 className="text-right font-iransans-demibold mb-3">
-              فرم ثبت نام
+              فرم تغییر کلمه عبور
             </h2>
+            {/* old password */}
             <div>
               <Controller
-                name="username"
+                name="oldPassword"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -144,33 +136,56 @@ function Register() {
                     InputProps={{
                       sx: { borderRadius: 1, height: 40 },
                     }}
-                    label="نام کاربری"
-                    variant="outlined"
-                    size="small"
-                  />
-                )}
-              />
-              <p className={errorTagClasses}>{errors.username?.message}</p>
-            </div>
-            <div>
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    className="w-full"
-                    InputProps={{
-                      sx: { borderRadius: 1, height: 40 },
-                    }}
-                    label="کلمه عبور"
+                    label="کلمه عبور قبلی"
                     variant="outlined"
                     type="password"
                     size="small"
                   />
                 )}
               />
-              <p className={errorTagClasses}>{errors.password?.message}</p>
+              <p className={errorTagClasses}>{errors.oldPassword?.message}</p>
+            </div>
+            {/* new password */}
+            <div>
+              <Controller
+                name="newPassword"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="w-full"
+                    InputProps={{
+                      sx: { borderRadius: 1, height: 40 },
+                    }}
+                    label="کلمه عبور جدید"
+                    variant="outlined"
+                    type="password"
+                    size="small"
+                  />
+                )}
+              />
+              <p className={errorTagClasses}>{errors.newPassword?.message}</p>
+            </div>
+            {/* tepeat new password */}
+            <div>
+              <Controller
+                name="newPassword"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="w-full"
+                    InputProps={{
+                      sx: { borderRadius: 1, height: 40 },
+                    }}
+                    label="تکرار کلمه عبور جدید"
+                    variant="outlined"
+                    type="password"
+                    size="small"
+                  />
+                )}
+              />
+              <p className={errorTagClasses}>{errors.newPassword?.message}</p>
             </div>
             <Button
               sx={{ marginTop: 3 }}
@@ -178,7 +193,7 @@ function Register() {
               variant="contained"
               disabled={disableButton ? true : false}
             >
-              ثبت نام
+              تغییر کلمه عبور
             </Button>
           </div>
         </CustomContainer>
@@ -186,4 +201,4 @@ function Register() {
     </form>
   );
 }
-export default Register;
+export default ChangePassword;

@@ -8,12 +8,12 @@ export async function PATCH(request: Request) {
   try {
     const body = await request.json();
     // get data from rquest body
-    const { email, password, oldPassword } = body;
+    const { username, password, oldPassword } = body;
     // validation
-    const isValidEmail = validation({
-      data: email,
+    const isValidUsername = validation({
+      data: username,
       minLength: 1,
-      type: "email",
+      type: "username",
     });
     const isValidpassword = validation({
       data: password,
@@ -25,7 +25,7 @@ export async function PATCH(request: Request) {
       minLength: 2,
       type: "password",
     });
-    if (!isValidEmail || !isValidpassword || !isValidOldPasswordassword) {
+    if (!isValidUsername || !isValidpassword || !isValidOldPasswordassword) {
       return new NextResponse("invalid data", { status: 400 });
     }
     // connect to db
@@ -35,7 +35,7 @@ export async function PATCH(request: Request) {
     const db = client.db("niceshop");
     const userCollection = db.collection("users");
     // check if user exist or not
-    const user = await userCollection.findOne({ email: email });
+    const user = await userCollection.findOne({ username: username });
     if (!user) {
       await client.close();
       return new NextResponse("user not found", { status: 400 });
@@ -49,7 +49,7 @@ export async function PATCH(request: Request) {
     // hash password
     const hashedPassword = await hashPassword(password);
     const result = await userCollection.updateOne(
-      { email: email },
+      { username: username },
       { $set: { password: hashedPassword } }
     );
     console.log(result);
