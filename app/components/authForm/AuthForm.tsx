@@ -1,6 +1,4 @@
 "use client";
-// axios
-import axios from "axios";
 // schema validation
 import { registerValidationSchema } from "@/lib/yupValidationSchema";
 // react hoock form
@@ -14,13 +12,12 @@ import MuiRtlWrapper from "@/app/components/reusableComponents/MuiRtlWrapper";
 import CustomContainer from "../layout/CustomContainer";
 import ShowMessage from "../reusableComponents/ShowMessage";
 // next
-import { redirect } from "next/navigation";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 // files
 import Logo from "@/public/images/logo.png";
 // react
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface IFormInput {
   username: string;
@@ -33,13 +30,6 @@ const schema = registerValidationSchema;
 function AuthForm() {
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
-  const [redirectPage, setRedirectPage] = useState(false);
-
-  useEffect(() => {
-    if (redirectPage) {
-      redirect("/");
-    }
-  }, [redirectPage]);
 
   const {
     control,
@@ -67,45 +57,22 @@ function AuthForm() {
       password: password,
     })
       .then((response) => {
-        alert("then");
-        if (!response.error) {
+        const error = response.error;
+        if (!error) {
           setMessage({
             status: true,
-            text: "ثبت نام با موفقیت انجام شد.",
+            text: " ورود با موفقیت انجام شد.",
             type: "success",
           });
-        }
-      })
-      .catch(function (error) {
-        alert("catch");
-        const hasError = error?.response?.data;
-        if (hasError) {
-          switch (hasError) {
-            case "you signed before":
-              setMessage({
-                status: true,
-                text: " این نام کاربری قبلا استفاده شده است.",
-                type: "error",
-              });
-              break;
-
-            default:
-              setMessage({
-                status: true,
-                text: "مشکلی پیش آمده لطفا مجددا تلاش کنید.",
-                type: "error",
-              });
-
-              break;
-          }
         } else {
           setMessage({
             status: true,
-            text: "مشکلی پیش آمده لطفا مجددا تلاش کنید.",
+            text: error,
             type: "error",
           });
         }
       })
+
       .finally(() => setDisableButton(false));
   };
 
@@ -121,9 +88,7 @@ function AuthForm() {
             <div className="mx-auto mt-4">
               <Image src={Logo} alt="Nice Shop" />
             </div>
-            <h2 className="text-right font-iransans-demibold mb-3">
-              فرم ثبت نام
-            </h2>
+            <h2 className="text-right font-iransans-demibold mb-3">فرم ورود</h2>
             <div>
               <Controller
                 name="username"
@@ -169,7 +134,7 @@ function AuthForm() {
               variant="contained"
               disabled={disableButton ? true : false}
             >
-              ثبت نام
+              ورود
             </Button>
           </div>
         </CustomContainer>

@@ -2,6 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "@/lib/functions";
 import { MongoClient } from "mongodb";
+import { validation } from "@/lib/helpers";
 
 export const options: NextAuthOptions = {
   session: {
@@ -11,32 +12,60 @@ export const options: NextAuthOptions = {
     CredentialsProvider({
       // @ts-ignore
       async authorize(credentials) {
+        // getdatabase user and pass
         const dbUsername = process.env.MONGOUSERNAME;
         const dbPassword = process.env.MONGOPASSWORD;
 
+        // extract entered username and password
+        const username = credentials.username;
+        const password = credentials.password;
+        // validation
+        const isValidUsername = validation({
+          data: username,
+          minLength: 7,
+          type: "username",
+        });
+        const isValidPassword = validation({
+          data: password,
+          minLength: 7,
+          type: "password",
+        });
+
+        if (!isValidUsername) {
+          throw new Error(
+            "نام کاربری شامل حروف و اعداد انگلیسی می باشد و حداقل 7 کاراکتر."
+          );
+        }
+        if (!isValidPassword) {
+          throw new Error(
+            "کلمه عبور شامل حروف و اعداد انگلیسی می باشد و حداقل 7 کاراکتر."
+          );
+        }
+        // connect to database
         const client = await MongoClient.connect(
           `mongodb+srv://${dbUsername}:${dbPassword}@cluster1.e9a3rna.mongodb.net/?retryWrites=true&w=majority`
         );
         const db = client.db("niceshop");
         // check if user exist or not
-        const user = await db
+        const dbUser = await db
           .collection("users")
-          .findOne({ username: credentials.username });
-        if (!user) {
+          .findOne({ username: username });
+        if (!dbUser) {
           client.close();
-          // ......credentials...credentials...credentials......credentials...credentials...
+          throw new Error("کاربر مورد نظر یافت نشد. لطفا ورود کنید.");
         }
-        const isValid = await verifyPassword(
-          credentials.password,
-          user.password
-        );
+        // check if passwords are mathces
+        const isValid = await verifyPassword(password, dbUser.password);
         if (!isValid) {
           client.close();
-          throw new Error("password and user are not match");
+          throw new Error("نام کاربری و کلمه ی عبور مطابقت ندارند.");
         }
-
         client.close();
-        return { username: user.username };
+        const user = {
+          _id: "asxasxasxs",
+          username: "asxasxsx",
+        };
+        return user;
       },
     }),
   ],

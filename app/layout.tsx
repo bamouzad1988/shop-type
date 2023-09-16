@@ -5,11 +5,12 @@ import "@/public/fonts/themify-icons/themify-icons.css";
 import type { Metadata } from "next";
 import MyHeader from "./components/layout/header/MyHeader";
 import Footer from "./components/layout/footer/Footer";
+import NextAuthProvider from "./components/reusableComponents/NextAuthProvider";
 export const metadata: Metadata = {
   title: "Nice Shop",
   description: "Created By Nice Shop Team",
 };
-import { SessionProvider } from "next-auth/react";
+
 //TODO
 export default function RootLayout({
   children,
@@ -21,11 +22,11 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body>
-        {/* <SessionProvider session={session}> */}
-        <MyHeader />
-        {children}
-        <Footer />
-        {/* </SessionProvider> */}
+        <NextAuthProvider session={session}>
+          <MyHeader />
+          {children}
+          <Footer />
+        </NextAuthProvider>
       </body>
     </html>
   );

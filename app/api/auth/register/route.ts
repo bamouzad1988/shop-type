@@ -1,5 +1,5 @@
 import { hashPassword } from "@/lib/functions";
-import { RegisterValidation } from "@/types/props.module";
+import { validation } from "@/lib/helpers";
 import { MongoClient } from "mongodb";
 import { NextResponse } from "next/server";
 
@@ -52,21 +52,3 @@ export async function POST(request: Request) {
     return new NextResponse("server error bijan", { status: 500 });
   }
 }
-
-const validation = (params: RegisterValidation) => {
-  const { data, minLength, type } = params;
-  const trimedData = data.trim();
-  if (!trimedData || trimedData.length < minLength) {
-    return false;
-  }
-
-  if (
-    type === "email" &&
-    !trimedData.includes("@") &&
-    !trimedData.includes(".")
-  ) {
-    return false;
-  }
-
-  return true;
-};
