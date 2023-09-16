@@ -8,6 +8,7 @@ export const options: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+
   providers: [
     CredentialsProvider({
       // @ts-ignore
@@ -62,11 +63,11 @@ export const options: NextAuthOptions = {
         }
         client.close();
         const user = {
-          _id: "asxasxasxs",
-          username: "asxasxsx",
+          name: username,
         };
         return user;
       },
+      credentials: undefined,
     }),
   ],
   pages: {

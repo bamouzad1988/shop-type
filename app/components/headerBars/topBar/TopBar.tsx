@@ -5,9 +5,9 @@ import Link from "next/link";
 function TopBar() {
   const { data: session } = useSession();
   console.log(session);
-  // setTimeout(() => {
-  //   signOut().then(() => console.log(session));
-  // }, 10000);
+  setTimeout(() => {
+    signOut().then(() => console.log(session));
+  }, 10000);
   const classes = {
     main: ` group scale-y-8  hover:scale-y-100  group  origin-top  flex
     transition-all duration-300 overflow-hidden xxs:flex-col md:flex-row justify-between py-0 xs:py-2 xs:items-center 
