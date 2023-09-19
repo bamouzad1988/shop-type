@@ -1,3 +1,4 @@
+'use client'
 import Category from "@/app/components/headerBars/middleBar/Category";
 import Search from "@/app/components/headerBars/middleBar/Search";
 

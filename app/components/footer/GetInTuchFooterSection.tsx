@@ -1,3 +1,4 @@
+'use client'
 import FooterSectionWrapper from "../reusableComponents/FooterSectionWrapper";
 import FooterTitle from "./FooterTitle";
 

@@ -44,7 +44,7 @@ function AuthForm() {
   });
 
   const onSubmit: SubmitHandler<IFormInput> = ({ username, password }) => {
-    // setDisableButton(true);
+    setDisableButton(true);
     setMessage({
       status: false,
       text: "",
@@ -55,25 +55,26 @@ function AuthForm() {
       redirect: false,
       username: username,
       password: password,
-    })
-      .then((response) => {
-        const error = response.error;
-        if (!error) {
-          setMessage({
-            status: true,
-            text: " ورود با موفقیت انجام شد.",
-            type: "success",
-          });
-        } else {
-          setMessage({
-            status: true,
-            text: error,
-            type: "error",
-          });
-        }
-      })
-
-      .finally(() => setDisableButton(false));
+    }).then((response) => {
+      const error = response.error;
+      if (!error) {
+        setMessage({
+          status: true,
+          text: " ورود با موفقیت انجام شد.",
+          type: "success",
+        });
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 6000);
+      } else {
+        setMessage({
+          status: true,
+          text: error,
+          type: "error",
+        });
+        setDisableButton(false);
+      }
+    });
   };
 
   const errorTagClasses = "mt-2 text-sm text-custom-main";

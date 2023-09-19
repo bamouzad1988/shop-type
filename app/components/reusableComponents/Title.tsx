@@ -1,3 +1,4 @@
+"use client";
 import { TitleProps } from "@/types/props.module";
 
 function Title({ title, position, hasUnderline, textSize }: TitleProps) {

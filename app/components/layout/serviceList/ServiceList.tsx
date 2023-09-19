@@ -1,3 +1,4 @@
+"use client";
 import ShopService from "../../shopService/ShopService";
 import CustomContainer from "../CustomContainer";
 

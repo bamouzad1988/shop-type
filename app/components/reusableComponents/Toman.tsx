@@ -1,3 +1,4 @@
+"use client";
 function Toman({ color }: { color?: string }) {
   const colorClass = color ? color : "text-custom-productText";
   return (

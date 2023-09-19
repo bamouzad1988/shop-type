@@ -1,3 +1,4 @@
+"use client";
 import { ShopServiceProps } from "@/types/props.module";
 
 function ShopService(props: ShopServiceProps) {

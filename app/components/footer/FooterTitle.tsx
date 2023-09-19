@@ -1,3 +1,4 @@
+'use client'
 import { FooterTitleProps } from "@/types/props.module";
 
 function FooterTitle(props: FooterTitleProps) {

@@ -1,3 +1,4 @@
+'use client'
 import { ListLinkProps } from "@/types/props.module";
 import FooterTitle from "./FooterTitle";
 import Link from "next/link";

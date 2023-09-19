@@ -4,6 +4,7 @@ export interface Props {
   children: React.ReactNode;
   hasBorder?: boolean;
 }
+
 export interface RegisterValidation {
   data: string;
   minLength: number;
@@ -44,6 +45,14 @@ export interface FooterTitleProps {
 export interface LinkLists {
   text: string;
   link: string;
+}
+export interface responsiveDialogProps {
+  text: string;
+  title: string;
+  open: boolean;
+  okText: string;
+  cancelText: string;
+  exitHandler: (text) => void;
 }
 export interface ListLinkProps {
   title: string;

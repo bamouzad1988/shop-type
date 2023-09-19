@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import CustomContainer from "../../layout/CustomContainer";
 import Link from "next/link";

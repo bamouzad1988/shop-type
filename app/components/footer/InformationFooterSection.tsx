@@ -1,3 +1,4 @@
+'use client'
 import { LinkLists } from "@/types/props.module";
 import FooterSectionWrapper from "../reusableComponents/FooterSectionWrapper";
 import LinkList from "./LinkList";

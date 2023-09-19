@@ -1,3 +1,4 @@
+'use client'
 import Logo from "@/app/components/headerBars/middleBar/Logo";
 import SearchAndCategory from "./SearchAndCategory";
 import CardAndProfile from "./CartAndProfile";

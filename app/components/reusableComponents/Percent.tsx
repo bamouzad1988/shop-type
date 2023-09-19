@@ -1,3 +1,4 @@
+"use client";
 import PercentIcon from "@mui/icons-material/Percent";
 
 function Percent() {

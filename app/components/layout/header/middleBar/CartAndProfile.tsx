@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Cart from "@/app/components/headerBars/middleBar/Cart";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";

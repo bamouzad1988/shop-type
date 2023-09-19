@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import "./banner.scss";
 import Link from "next/link";

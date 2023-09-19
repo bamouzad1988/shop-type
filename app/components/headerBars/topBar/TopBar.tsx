@@ -1,13 +1,23 @@
 "use client";
+import { Dialog } from "@mui/material";
 import { useSession, signOut } from "next-auth/react";
 
 import Link from "next/link";
+import { useState } from "react";
+import ResponsiveDialog from "../../reusableComponents/Dialog";
 function TopBar() {
+  const [showDialog, setShowDialog] = useState(false);
   const { data: session } = useSession();
-  console.log(session);
-  setTimeout(() => {
-    signOut().then(() => console.log(session));
-  }, 10000);
+
+  const exitClickHandler = () => {
+    setShowDialog(true);
+  };
+  const exitHandler = (text: string) => {
+    if (text === "ok") {
+      signOut();
+    }
+    setShowDialog(false);
+  };
   const classes = {
     main: ` group scale-y-8  hover:scale-y-100  group  origin-top  flex
     transition-all duration-300 overflow-hidden xxs:flex-col md:flex-row justify-between py-0 xs:py-2 xs:items-center 
@@ -22,6 +32,16 @@ function TopBar() {
 
   return (
     <div className=" xs:mt-1 xs:mb-2">
+      {showDialog && (
+        <ResponsiveDialog
+          title="خروج از ناحیه کاربری"
+          text="آیا می خواهید خارج شوید؟"
+          okText="خروج"
+          open={showDialog}
+          cancelText="انصراف"
+          exitHandler={exitHandler}
+        />
+      )}
       <i className="ti-menu cursor-pointer xs:hidden absolute z-30 group top-1 left-1 text-custom-white peer"></i>
       <div
         className={`${classes.main} peer-hover:scale-y-100 peer-hover:[&>ul]:opacity-100`}
@@ -47,9 +67,22 @@ function TopBar() {
           </li>
           <li className={classes.li}>
             <i className="ti-power-off ml-1"></i>
-            <Link href="/" className={classes.link}>
-              ورود
-            </Link>
+            {session ? (
+              <Link
+                onClick={(e) => {
+                  e.preventDefault();
+                  exitClickHandler();
+                }}
+                href="#"
+                className={classes.link}
+              >
+                خروج
+              </Link>
+            ) : (
+              <Link href="/login" className={classes.link}>
+                ورود
+              </Link>
+            )}
           </li>
         </ul>
         <ul className={classes.ul}>
