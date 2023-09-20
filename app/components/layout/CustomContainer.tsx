@@ -1,4 +1,3 @@
-"use client";
 import { Props } from "@/types/props.module";
 
 function CustomContainer({ children, hasBorder }: Props) {

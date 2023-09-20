@@ -18,6 +18,7 @@ import { signIn } from "next-auth/react";
 import Logo from "@/public/images/logo.png";
 // react
 import { useState } from "react";
+import Link from "next/link";
 
 interface IFormInput {
   username: string;
@@ -137,6 +138,15 @@ function AuthForm() {
             >
               ورود
             </Button>
+            {!disableButton && (
+              <p className="text-center m-0">
+                برای{" "}
+                <Link className="text-custom-main underline" href="/register">
+                  ثبت نام
+                </Link>{" "}
+                کلیک کنید.
+              </p>
+            )}
           </div>
         </CustomContainer>
       </MuiRtlWrapper>

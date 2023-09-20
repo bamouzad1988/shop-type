@@ -1,4 +1,7 @@
 "use client";
+// react
+import { useEffect, useState } from "react";
+// axios
 import axios from "axios";
 // yup
 import { changePasswordValidationSchema } from "./../../lib/yupValidationSchema";
@@ -13,10 +16,11 @@ import MuiRtlWrapper from "../components/reusableComponents/MuiRtlWrapper";
 import CustomContainer from "../components/layout/CustomContainer";
 // next
 import Image from "next/image";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 // files
 import Logo from "@/public/images/logo.png";
 import ShowMessage from "../components/reusableComponents/ShowMessage";
-import { useState } from "react";
 
 interface IFormInput {
   username: string;
@@ -28,6 +32,15 @@ const schema = changePasswordValidationSchema;
 // type FormData = yup.InferType<typeof schema>;
 
 function ChangePassword() {
+  // get user sessin
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    //  if user is not login redirect to home page
+    if (status !== "loading"&&status !== "authenticated") {
+      redirect("/");
+    } 
+  }, [ status]);
+
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
 
@@ -58,8 +71,8 @@ function ChangePassword() {
       .post(
         "/api/auth/user/change-password",
         {
-            username:"",
-            oldPassword: oldPassword,
+          username: "",
+          oldPassword: oldPassword,
           newPassword: newPassword,
         },
         {
@@ -105,8 +118,7 @@ function ChangePassword() {
             type: "error",
           });
         }
-      })
-      .finally(() => setDisableButton(false));
+      });
   };
 
   const errorTagClasses = "mt-2 text-sm text-custom-main";

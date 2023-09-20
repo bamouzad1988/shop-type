@@ -1,3 +1,4 @@
+"use client";
 import AboutFooterSection from "../../footer/AboutFooterSection";
 import CustomerService from "../../footer/CustomerService";
 import GetInTuchFooterSection from "../../footer/GetInTuchFooterSection";

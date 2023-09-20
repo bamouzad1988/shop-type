@@ -1,17 +1,23 @@
 "use client";
-import { Dialog } from "@mui/material";
+// next
 import { useSession, signOut } from "next-auth/react";
-
 import Link from "next/link";
+// react
 import { useState } from "react";
+// components
 import ResponsiveDialog from "../../reusableComponents/Dialog";
+
 function TopBar() {
   const [showDialog, setShowDialog] = useState(false);
+  // get user sessin
   const { data: session } = useSession();
 
+  // run after click on exit button in menu
   const exitClickHandler = () => {
     setShowDialog(true);
   };
+
+  // run after user agree the exit dialog box
   const exitHandler = (text: string) => {
     if (text === "ok") {
       signOut();
@@ -53,18 +59,20 @@ function TopBar() {
               محل فروشگاه
             </Link>
           </li>
-          <li className={`${classes.li} ${classes.liBorderLeft}`}>
+          {/* <li className={`${classes.li} ${classes.liBorderLeft}`}>
             <i className="ti-alarm-clock ml-1"></i>
             <Link href="/" className={classes.link}>
               خرید روزانه
             </Link>
-          </li>
-          <li className={`${classes.li} ${classes.liBorderLeft}`}>
-            <i className="ti-user ml-1"></i>
-            <Link href="/" className={classes.link}>
-              اکانت
-            </Link>
-          </li>
+          </li> */}
+          {session && (
+            <li className={`${classes.li} ${classes.liBorderLeft}`}>
+              <i className="ti-user ml-1"></i>
+              <Link href="/profile" className={classes.link}>
+                اکانت
+              </Link>
+            </li>
+          )}
           <li className={classes.li}>
             <i className="ti-power-off ml-1"></i>
             {session ? (

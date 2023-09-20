@@ -4,7 +4,7 @@ import Link from "next/link";
 import logoImage from "@/public/images/logo2.png";
 import Image from "next/image";
 
-async function AboutFooterSection() {
+function AboutFooterSection() {
   // changePassword
   // async function changePassword(
   //   email: string = "bijan@123",

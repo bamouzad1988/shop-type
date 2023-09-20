@@ -1,3 +1,4 @@
+"use client";
 import TreandingProduct from "../../treandingItems/TreandingProduct";
 import myImage12 from "@/public/images/products/p12.jpg";
 import myImage14 from "@/public/images/products/p14.jpg";

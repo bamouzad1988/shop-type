@@ -64,6 +64,7 @@ export const options: NextAuthOptions = {
         client.close();
         const user = {
           name: username,
+          role: dbUser.role,
         };
         return user;
       },

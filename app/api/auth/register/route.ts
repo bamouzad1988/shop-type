@@ -44,6 +44,7 @@ export async function POST(request: Request) {
     const result = await db.collection("users").insertOne({
       username: username,
       password: hashedPassword,
+      role: "guest",
     });
     // close connection
     await client.close();

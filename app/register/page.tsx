@@ -12,13 +12,15 @@ import Button from "@mui/material/Button";
 // components
 import MuiRtlWrapper from "@/app/components/reusableComponents/MuiRtlWrapper";
 // next
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { signIn } from "next-auth/react";
 // files
 import Logo from "@/public/images/logo.png";
 // react
 import { useEffect, useState } from "react";
+// Components
 import ShowMessage from "../components/reusableComponents/ShowMessage";
 import CustomContainer from "../components/layout/CustomContainer";
 
@@ -31,13 +33,19 @@ const schema = registerValidationSchema;
 // type FormData = yup.InferType<typeof schema>;
 
 function Register() {
+  const { data: session } = useSession();
+
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
   const [redirectPage, setRedirectPage] = useState(false);
-
+  // if user is login redirect to home page
+  if (session) {
+    redirect("/");
+  }
+  // redirect after register
   useEffect(() => {
     if (redirectPage) {
-      redirect("/");
+      redirect("/login");
     }
   }, [redirectPage]);
 
@@ -54,7 +62,7 @@ function Register() {
   });
 
   const onSubmit: SubmitHandler<IFormInput> = ({ username, password }) => {
-    // setDisableButton(true);
+    setDisableButton(true);
     setMessage({
       status: false,
       text: "",
@@ -114,8 +122,7 @@ function Register() {
             type: "error",
           });
         }
-      })
-      .finally(() => setDisableButton(false));
+      });
   };
 
   const errorTagClasses = "mt-2 text-sm text-custom-main";
@@ -180,6 +187,14 @@ function Register() {
             >
               ثبت نام
             </Button>
+
+            <p className="text-center m-0">
+              برای{" "}
+              <Link className="text-custom-main underline" href="/login">
+                ورود
+              </Link>{" "}
+              کلیک کنید.
+            </p>
           </div>
         </CustomContainer>
       </MuiRtlWrapper>
