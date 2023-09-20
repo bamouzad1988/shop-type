@@ -59,12 +59,14 @@ function TopBar() {
               محل فروشگاه
             </Link>
           </li>
-          {/* <li className={`${classes.li} ${classes.liBorderLeft}`}>
-            <i className="ti-alarm-clock ml-1"></i>
-            <Link href="/" className={classes.link}>
-              خرید روزانه
-            </Link>
-          </li> */}
+          {session && (
+            <li className={`${classes.li} ${classes.liBorderLeft}`}>
+              <i className="ti-plus ml-1"></i>
+              <Link href="/add-product" className={classes.link}>
+                درج محصول
+              </Link>
+            </li>
+          )}
           {session && (
             <li className={`${classes.li} ${classes.liBorderLeft}`}>
               <i className="ti-user ml-1"></i>
