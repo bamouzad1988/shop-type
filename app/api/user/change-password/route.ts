@@ -1,14 +1,31 @@
 import { hashPassword, verifyPassword } from "@/lib/functions";
-import { RegisterValidation } from "@/types/props.module";
+import { validation } from "@/lib/helpers";
 import { MongoClient } from "mongodb";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 
-export async function PATCH(request: Request) {
+export async function POST(req: Request, res: Response) {
+  const session = await getServerSession(options);
+  if (!session) {
+    return new NextResponse("not athenticated", { status: 500 });
+  }
   // check if user is logged in
+  const dbUsername = process.env.MONGOUSERNAME;
+  const dbPassword = process.env.MONGOPASSWORD;
   try {
-    const body = await request.json();
+    const body = await req.json();
     // get data from rquest body
-    const { username, password, oldPassword } = body;
+    const { username, newPassword, oldPassword, newPasswordRepeat } = body;
+
+    // check if password an repeat password are equal
+    if (newPasswordRepeat !== newPassword) {
+      return new NextResponse("not match passwords", { status: 400 });
+    }
+    // check if new password an old password are equal
+    if (newPasswordRepeat === oldPassword) {
+      return new NextResponse("passwords are equal", { status: 400 });
+    }
     // validation
     const isValidUsername = validation({
       data: username,
@@ -16,21 +33,33 @@ export async function PATCH(request: Request) {
       type: "username",
     });
     const isValidpassword = validation({
-      data: password,
-      minLength: 2,
+      data: newPassword,
+      minLength: 7,
+      type: "password",
+    });
+    const isValidpasswordRepeat = validation({
+      data: newPasswordRepeat,
+      minLength: 7,
       type: "password",
     });
     const isValidOldPasswordassword = validation({
       data: oldPassword,
-      minLength: 2,
+      minLength: 7,
       type: "password",
     });
-    if (!isValidUsername || !isValidpassword || !isValidOldPasswordassword) {
+
+    // check validation
+    if (
+      !isValidUsername ||
+      !isValidpassword ||
+      !isValidOldPasswordassword ||
+      !isValidpasswordRepeat
+    ) {
       return new NextResponse("invalid data", { status: 400 });
     }
     // connect to db
     const client = await MongoClient.connect(
-      `mongodb+srv://b_amouzad1988:B1ttQu2H9ntG8vWT@cluster1.e9a3rna.mongodb.net/?retryWrites=true&w=majority`
+      `mongodb+srv://${dbUsername}:${dbPassword}@cluster1.e9a3rna.mongodb.net/?retryWrites=true&w=majority`
     );
     const db = client.db("niceshop");
     const userCollection = db.collection("users");
@@ -41,41 +70,28 @@ export async function PATCH(request: Request) {
       return new NextResponse("user not found", { status: 400 });
     }
     const currentPassword = user.password;
-    const arePasswordsEqual = verifyPassword(oldPassword, currentPassword);
+
+    const arePasswordsEqual = await verifyPassword(
+      oldPassword,
+      currentPassword
+    );
+    // check old user password and old password are equal
     if (!arePasswordsEqual) {
       await client.close();
       return new NextResponse("old password is inccorect", { status: 400 });
     }
     // hash password
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await hashPassword(newPassword);
+    // save to db
     const result = await userCollection.updateOne(
       { username: username },
       { $set: { password: hashedPassword } }
     );
-    console.log(result);
     await client.close();
     return NextResponse.json(result);
 
     // return NextResponse.json(result);
   } catch (error) {
-    return new NextResponse("server error", { status: 500 });
+    return new NextResponse("server error ", { status: 500 });
   }
 }
-
-const validation = (params: RegisterValidation) => {
-  const { data, minLength, type } = params;
-  const trimedData = data.trim();
-  if (!trimedData || trimedData.length < minLength) {
-    return false;
-  }
-
-  if (
-    type === "email" &&
-    !trimedData.includes("@") &&
-    !trimedData.includes(".")
-  ) {
-    return false;
-  }
-
-  return true;
-};

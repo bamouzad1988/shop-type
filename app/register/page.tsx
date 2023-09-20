@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 // Components
 import ShowMessage from "../components/reusableComponents/ShowMessage";
 import CustomContainer from "../components/layout/CustomContainer";
+import { returnPersianMessage } from "@/lib/helpers";
 
 interface IFormInput {
   username: string;
@@ -97,24 +98,13 @@ function Register() {
       .catch(function (error) {
         const hasError = error?.response?.data;
         if (hasError) {
-          switch (hasError) {
-            case "you signed before":
-              setMessage({
-                status: true,
-                text: " این نام کاربری قبلا استفاده شده است.",
-                type: "error",
-              });
-              break;
-
-            default:
-              setMessage({
-                status: true,
-                text: "مشکلی پیش آمده لطفا مجددا تلاش کنید.",
-                type: "error",
-              });
-
-              break;
-          }
+          const errorText=returnPersianMessage(hasError)
+          setMessage({
+            status: true,
+            text: errorText,
+            type: "error",
+          });
+       
         } else {
           setMessage({
             status: true,

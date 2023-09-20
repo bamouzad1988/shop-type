@@ -21,11 +21,12 @@ import { useSession } from "next-auth/react";
 // files
 import Logo from "@/public/images/logo.png";
 import ShowMessage from "../components/reusableComponents/ShowMessage";
+import { returnPersianMessage } from "@/lib/helpers";
 
 interface IFormInput {
-  username: string;
-  newPassword: string;
   oldPassword: string;
+  newPassword: string;
+  newPasswordRepeat: string;
 }
 const schema = changePasswordValidationSchema;
 
@@ -52,6 +53,7 @@ function ChangePassword() {
     defaultValues: {
       newPassword: "",
       oldPassword: "",
+      newPasswordRepeat:"",
     },
     resolver: yupResolver(schema),
   });
@@ -59,6 +61,7 @@ function ChangePassword() {
   const onSubmit: SubmitHandler<IFormInput> = ({
     newPassword,
     oldPassword,
+    newPasswordRepeat
   }) => {
     setDisableButton(true);
     setMessage({
@@ -69,11 +72,12 @@ function ChangePassword() {
     //register
     axios
       .post(
-        "/api/auth/user/change-password",
+        "/api/user/change-password",
         {
-          username: "",
+          username: session.user.name,
           oldPassword: oldPassword,
-          newPassword: newPassword,
+          newPassword:newPassword,
+          newPasswordRepeat: newPasswordRepeat,
         },
         {
           headers: {
@@ -91,34 +95,17 @@ function ChangePassword() {
         }
       })
       .catch(function (error) {
+        setDisableButton(false)
         const hasError = error?.response?.data;
         if (hasError) {
-          switch (hasError) {
-            case "you signed before":
-              setMessage({
-                status: true,
-                text: " این نام کاربری قبلا استفاده شده است.",
-                type: "error",
-              });
-              break;
-
-            default:
-              setMessage({
-                status: true,
-                text: "مشکلی پیش آمده لطفا مجددا تلاش کنید.",
-                type: "error",
-              });
-
-              break;
-          }
-        } else {
+          const errorText=returnPersianMessage(hasError)
           setMessage({
             status: true,
-            text: "مشکلی پیش آمده لطفا مجددا تلاش کنید.",
+            text: errorText,
             type: "error",
           });
-        }
-      });
+        } 
+      }).finally(()=>setDisableButton(false))
   };
 
   const errorTagClasses = "mt-2 text-sm text-custom-main";
@@ -181,7 +168,7 @@ function ChangePassword() {
             {/* tepeat new password */}
             <div>
               <Controller
-                name="newPassword"
+                name="newPasswordRepeat"
                 control={control}
                 render={({ field }) => (
                   <TextField

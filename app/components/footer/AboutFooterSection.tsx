@@ -5,36 +5,7 @@ import logoImage from "@/public/images/logo2.png";
 import Image from "next/image";
 
 function AboutFooterSection() {
-  // changePassword
-  // async function changePassword(
-  //   email: string = "bijan@123",
-  //   oldPassword: string = "sdsdsdsdfsdf",
-  //   password: string = "sdsdsdsdfsdf"
-  // ) {
-  //   try {
-  //     const response = await fetch("/api/user/changePassword", {
-  //       method: "PATCH",
-  //       body: JSON.stringify({
-  //         email: email,
-  //         password: password,
-  //         oldPassword: oldPassword,
-  //       }),
-  //       headers: {
-  //         "Content-type": "application/json; charset=UTF-8",
-  //       },
-  //     });
-  //     return await response.text();
-  //   } catch (error) {
-  //     console.log("component error");
-  //   }
-  // }
-  // const ss = await changePassword(
-  //   "bijan@123.",
-  //   "sdfsdfsdfsdf",
-  //   "sdfsdfsdfsdf11111"
-  // );
-  // console.log(ss);
-
+  
   return (
     <FooterSectionWrapper>
       <Link href="/" className="block mb-6">
