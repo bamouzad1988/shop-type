@@ -1,4 +1,3 @@
-import { hashPassword } from "@/lib/functions";
 import { validation } from "@/lib/helpers";
 import { MongoClient } from "mongodb";
 import { NextResponse } from "next/server";
@@ -9,24 +8,41 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     // get data from rquest body
-    const { username, password } = body;
+    const { username, name, description, image, model, discount ,section} = body;
     // validation
     const isValidUsername = validation({
       data: username,
-      minLength: 4,
+      minLength: 7,
       type: "username",
     });
-    const isValidpassword = validation({
-      data: password,
-      minLength: 7,
-      type: "password",
+    const isValidName = validation({
+      data: name,
+      minLength: 3,
+      type: "name",
     });
-    if (!isValidUsername || !isValidpassword) {
+    const isValidDescription = validation({
+      data: description,
+      minLength: 3,
+      type: "description",
+    });
+    const isValidSection = validation({
+      data: section,
+      minLength: 3,
+      type: "section",
+    });
+    const isValidImage = validation({
+      data: image,
+      minLength: 3,
+      type: "image",
+    });
+    if (
+      !isValidUsername ||isValidSection||
+      !isValidName ||
+      !isValidDescription ||
+      !isValidImage
+    ) {
       return new NextResponse("invalid data", { status: 400 });
     }
-    // hash password
-    const hashedPassword = await hashPassword(password);
-
     // connect to db
     const client = await MongoClient.connect(
       `mongodb+srv://${dbUsername}:${dbPassword}@cluster1.e9a3rna.mongodb.net/?retryWrites=true&w=majority`
@@ -36,20 +52,24 @@ export async function POST(request: Request) {
     const existingUser = await db
       .collection("users")
       .findOne({ username: username });
-    if (existingUser) {
+    if (!existingUser) {
       await client.close();
-      return new NextResponse("you signed before", { status: 400 });
+      return new NextResponse("not athenticated", { status: 400 });
     }
     // create new user
-    const result = await db.collection("users").insertOne({
+    const result = await db.collection("products").insertOne({
       username: username,
-      password: hashedPassword,
-      role: "guest",
+      name: name,
+      description: description,
+      image: image,
+      model: model,
+      discount: discount,
+      section:section
     });
     // close connection
     await client.close();
     return NextResponse.json(result);
   } catch (error) {
-    return new NextResponse("server error", { status: 500 });
+    return new NextResponse("server error in adding product", { status: 500 });
   }
 }

@@ -50,6 +50,6 @@ export async function POST(request: Request) {
     await client.close();
     return NextResponse.json(result);
   } catch (error) {
-    return new NextResponse("server error", { status: 500 });
+    return new NextResponse("server error in register user", { status: 500 });
   }
 }

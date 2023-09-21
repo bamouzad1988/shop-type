@@ -46,6 +46,18 @@ export interface LinkLists {
   text: string;
   link: string;
 }
+export interface ListItemProps{
+  listItems:string[];
+  title:string
+}
+export interface AddProductInputs {
+  name: string;
+  model: string;
+  description: string;
+  image: string;
+  section: string;
+  discount: number;
+}
 export interface responsiveDialogProps {
   text: string;
   title: string;

@@ -11,7 +11,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // mui
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { TextareaAutosize } from "@mui/base/TextareaAutosize";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import {  MenuItem } from "@mui/material";
 // components
 import CustomContainer from "../components/layout/CustomContainer";
 import MuiRtlWrapper from "@/app/components/reusableComponents/MuiRtlWrapper";
@@ -21,37 +23,39 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 // files
 import Logo from "@/public/images/logo.png";
-
 // Components
 import ShowMessage from "../components/reusableComponents/ShowMessage";
 import { returnPersianMessage } from "@/lib/helpers";
+// interface
+import { AddProductInputs } from "@/types/props.module";
 
-interface IFormInput {
-  name: string;
-  model: string;
-  description: string;
-  image: string;
-  discount: number;
-}
 const schema = addProductSchema;
-
-// type FormData = yup.InferType<typeof schema>;
 
 function AddProduct() {
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
 
   const { data: session, status } = useSession();
-  const username=session?.user?.name
+
+  // get current users username
+  const username = session?.user?.name;
+  // redirect if user not athenticated
   useEffect(() => {
     //  if user is not login redirect to home page
     if (status !== "loading" && status !== "authenticated") {
       redirect("/");
-    }else if(status !== "loading"&&status === "authenticated"){
-        
+    } else if (status !== "loading" && status === "authenticated") {
     }
   }, [status]);
-
+  // set defaultvalue for site section
+  useEffect(() => {
+    //  if user is not login redirect to home page
+    if (status !== "loading" && status !== "authenticated") {
+      redirect("/");
+    } else if (status !== "loading" && status === "authenticated") {
+    }
+  }, [status]);
+  // setting form input initial values
   const {
     control,
     handleSubmit,
@@ -62,16 +66,18 @@ function AddProduct() {
       model: "",
       description: "",
       image: "",
+      section: "عمومی",
       discount: 0,
     },
     resolver: yupResolver(schema),
   });
-
-  const onSubmit: SubmitHandler<IFormInput> = ({
+  // form submition
+  const onSubmit: SubmitHandler<AddProductInputs> = ({
     name,
     model,
     description,
     image,
+    section,
     discount,
   }) => {
     setDisableButton(true);
@@ -91,6 +97,7 @@ function AddProduct() {
           description: description,
           image: image,
           discount: discount,
+          section: section,
         },
         {
           headers: {
@@ -123,10 +130,13 @@ function AddProduct() {
             type: "error",
           });
         }
-      }).finally(()=>setDisableButton(false))
+      })
+      .finally(() => setDisableButton(false));
   };
 
   const errorTagClasses = "mt-2 text-sm text-custom-main";
+// list for site section
+  const listItems = ["عمومی","کالای دیجیتال", "پوشاک", "لوازم منزل", "کیف", "کفش"];
   if (status === "loading") {
     return;
   }
@@ -176,7 +186,7 @@ function AddProduct() {
                     InputProps={{
                       sx: { borderRadius: 1, height: 40 },
                     }}
-                    label="مدل"
+                    label="مدل(اختیاری)"
                     variant="outlined"
                     type="text"
                     size="small"
@@ -206,7 +216,28 @@ function AddProduct() {
               />
               <p className={errorTagClasses}>{errors.image?.message}</p>
             </div>
-            {"discount"}
+            {/* section */}
+            <p className="m-0 relative top-3 text-sm text-custom-textSecondary">
+                    <label>بخش نمایش</label>
+            </p>
+            <div>
+              <Controller
+                render={({ field }) => (
+                  <Select
+                    {...field}   
+                    size="small"
+                    className="w-full"
+                    defaultValue='عمومی'
+                  >
+                    {listItems&&listItems.map(item=><MenuItem value={item}>{item}</MenuItem>)}
+                  </Select>
+                )}
+                control={control}
+                name="section"
+              />
+              <p className={errorTagClasses}>{errors.section?.message}</p>
+            </div>
+            {/* "discount" */}
             <div>
               <Controller
                 name="discount"
@@ -233,7 +264,7 @@ function AddProduct() {
                 name="description"
                 control={control}
                 render={({ field }) => (
-                  <TextareaAutosize 
+                  <TextareaAutosize
                     {...field}
                     aria-label="minimum height"
                     minRows={6}

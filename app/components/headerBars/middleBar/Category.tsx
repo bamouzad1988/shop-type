@@ -1,13 +1,16 @@
 "use client";
+
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+// interface
+import { ListItemProps } from "@/types/props.module";
 
 import { useState } from "react";
 
-function Category() {
+function Category({listItems,title}:ListItemProps) {
   const [category, setCategory] = useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -18,13 +21,13 @@ function Category() {
     <Box sx={{ width: 170 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label" size="small">
-          دسته بندی
+          {title}
         </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={category}
-          label="دسته بندی"
+          label={title}
           onChange={handleChange}
           style={{
             borderRadius: "0",
@@ -33,12 +36,11 @@ function Category() {
             height: 40,
           }}
         >
-          <MenuItem value={"-1"}> دسته بندی</MenuItem>
-          <MenuItem value={"کالای دیجیتال"}>کالای دیجیتال</MenuItem>
-          <MenuItem value={"پوشاک"}>پوشاک</MenuItem>
-          <MenuItem value={"لوازم منزل"}>لوازم منزل</MenuItem>
-          <MenuItem value={"اسباب بازی"}>اسباب بازی</MenuItem>
-          <MenuItem value={"زیبایی و سلامت"}>زیبایی و سلامت</MenuItem>
+          <MenuItem value={"-1"}>{title}</MenuItem>
+          {listItems &&
+            listItems.map((item) => {
+              return <MenuItem value={item}>{item}</MenuItem>;
+            })}
         </Select>
       </FormControl>
     </Box>

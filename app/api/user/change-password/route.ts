@@ -92,6 +92,6 @@ export async function POST(req: Request, res: Response) {
 
     // return NextResponse.json(result);
   } catch (error) {
-    return new NextResponse("server error ", { status: 500 });
+    return new NextResponse("server error in changing password", { status: 500 });
   }
 }
