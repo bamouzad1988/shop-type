@@ -24,9 +24,10 @@ import Image from "next/image";
 import Logo from "@/public/images/logo.png";
 // Components
 import ShowMessage from "../components/reusableComponents/ShowMessage";
-import fetchFromAxios, { returnPersianMessage } from "@/lib/helpers";
+import  {postAxios, returnPersianMessage } from "@/lib/helpers";
 // interface
 import { AddProductInputs } from "@/types/props.module";
+import Loader from "../components/reusableComponents/Loader";
 
 const schema = addProductSchema;
 
@@ -83,7 +84,7 @@ function AddProduct() {
       text: "",
       type: "",
     });
-    const { data, error } = await fetchFromAxios(
+    const { data, error } = await postAxios(
       "/api/product/add-product",
       "post",
       {
@@ -143,7 +144,7 @@ function AddProduct() {
   // list for product types
   const productTypeListItems = ["پوشاک", "سایر", "کیف", "کفش"];
   if (status === "loading") {
-    return;
+    return<Loader size='4rem'/>
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="py-10">

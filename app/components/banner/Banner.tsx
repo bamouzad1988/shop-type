@@ -3,14 +3,14 @@ import "./banner.scss";
 import Link from "next/link";
 
 import { BannerProps } from "@/types/props.module";
-function Banner({ image, overTitle, title, link, linkText }: BannerProps) {
+function Banner({ image, overTitle, title, link, linkText,alt }: BannerProps) {
   return (
-    <div className="main bg-custom-main w-full h-auto relative aspect-video ">
+    <div className="main w-full h-auto relative aspect-video ">
       <Image
         src={image}
-        alt="user profile picture"
-        className="w-full h-full"
-        layout="responsive"
+        alt={alt}
+        width={100}
+        height={100}
         loading="lazy"
       />
       <div className="absolute top-[20px] pr-10 max-w-[60%]">

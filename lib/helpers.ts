@@ -46,25 +46,49 @@ export const returnPersianMessage = (text: string) => {
   }
 };
 // axios request handler
-export async function fetchFromAxios<T>(
+export async function postAxios<T>(
   url: string,
   method: string,
   payload: Record<string | number, any> = {}
 ): Promise<FetchResult<T>> {
   const controller = new AbortController();
   try {
+ 
+    console.log(method);
     const response: AxiosResponse<T> = await axios.request({
       data: payload,
       signal: controller.signal,
       method,
       url,
     });
+ //TODO
+//  check for canceling requesst
     return { data: response.data, error: null };
   } catch (error) {
-    return { data: null, error:error.response.data };
+    return { data: null, error:error?.response?.data };
   } finally {
     controller.abort();
   }
 }
-
-export default fetchFromAxios;
+export async function getAxios<T>(
+  url: string,
+  method: string,
+  payload: Record<string | number, any> = {}
+): Promise<FetchResult<T>> {
+  const controller = new AbortController();
+  try {
+ 
+    const response: AxiosResponse<T> = await axios.request({
+      data: payload,
+      signal: controller.signal,
+      method,
+      url,
+    });
+//  check for canceling requesst
+    return { data: response.data, error: null };
+  } catch (error) {
+    return { data: null, error:error?.response?.data };
+  } finally {
+    controller.abort();
+  }
+}

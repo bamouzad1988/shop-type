@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 // Components
 import ShowMessage from "../components/reusableComponents/ShowMessage";
 import CustomContainer from "../components/layout/CustomContainer";
-import { returnPersianMessage } from "@/lib/helpers";
+import { postAxios, returnPersianMessage } from "@/lib/helpers";
 
 interface IFormInput {
   username: string;
@@ -62,7 +62,10 @@ function Register() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = ({ username, password }) => {
+  const onSubmit: SubmitHandler<IFormInput> = async ({
+    username,
+    password,
+  }) => {
     setDisableButton(true);
     setMessage({
       status: false,
@@ -70,49 +73,33 @@ function Register() {
       type: "",
     });
     //register
-    axios
-      .post(
-        "/api/auth/register",
-        {
-          username: username,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          setMessage({
-            status: true,
-            text: "ثبت نام با موفقیت انجام شد.",
-            type: "success",
-          });
-          setTimeout(() => {
-            setRedirectPage(true);
-          }, 5000);
-        }
-      })
-      .catch(function (error) {
-        const hasError = error?.response?.data;
-        if (hasError) {
-          const errorText=returnPersianMessage(hasError)
-          setMessage({
-            status: true,
-            text: errorText,
-            type: "error",
-          });
-       
-        } else {
-          setMessage({
-            status: true,
-            text: "مشکلی پیش آمده لطفا مجددا تلاش کنید.",
-            type: "error",
-          });
-        }
+    const { data, error } = await postAxios("/api/auth/register", "post", {
+      username: username,
+      password: password,
+    });
+
+    if (data) {
+      setMessage({
+        status: true,
+        text: "ثبت نام با موفقیت انجام شد.",
+        type: "success",
       });
+    } else if (error) {
+      const errorText = returnPersianMessage(error);
+      setMessage({
+        status: true,
+        text: errorText,
+        type: "error",
+      });
+      setDisableButton(false);
+    } else {
+      setMessage({
+        status: true,
+        text: "مشکلی پیش آمده لطفا مجددا تلاش کنید!",
+        type: "error",
+      });
+      setDisableButton(false);
+    }
   };
 
   const errorTagClasses = "mt-2 text-sm text-custom-main";

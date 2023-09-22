@@ -21,7 +21,6 @@ function SuggestionProduct(props: SuggestionProps) {
           src={image}
           alt="dssad"
           className="w-full h-full"
-          layout="responsive"
           loading="lazy"
         />
       </div>

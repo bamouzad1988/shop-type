@@ -35,7 +35,6 @@ function TopBar() {
     link: "font-iransans-regular text-xs text-custom-white xs:text-custom-text hover:text-custom-textSecondary xs:hover:text-custom-main transition-colors ease-in-out duration-300",
     span: "font-iransans-demibold text-xs text-custom-white xs:text-custom-text",
   };
-
   return (
     <div className=" xs:mt-1 xs:mb-2">
       {showDialog && (

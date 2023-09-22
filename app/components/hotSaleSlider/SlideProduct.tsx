@@ -18,7 +18,6 @@ function SlideProduct(props: SlideProductProps) {
             src={image}
             alt={title}
             className="w-full h-full"
-            layout="responsive"
             loading="lazy"
           />
         </div>

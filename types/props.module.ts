@@ -85,8 +85,10 @@ export interface BannerProps {
   overTitle: string;
   title: string;
   link: string;
+  alt: string;
   linkText: string;
   image: StaticImport;
+
 }
 
 export type Events<Value = string> =
