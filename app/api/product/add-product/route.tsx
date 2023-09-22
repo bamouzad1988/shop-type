@@ -8,7 +8,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     // get data from rquest body
-    const { username, name, description, image, model, discount ,section} = body;
+    const { username, name, description, image, model, discount,price, section,productType } =
+      body;
     // validation
     const isValidUsername = validation({
       data: username,
@@ -30,18 +31,31 @@ export async function POST(request: Request) {
       minLength: 3,
       type: "section",
     });
+    const isValidproductType = validation({
+      data: productType,
+      minLength: 3,
+      type: "productType",
+    });
     const isValidImage = validation({
       data: image,
       minLength: 3,
       type: "image",
     });
+    const isValidPrice = validation({
+      data: image,
+      minLength: 1,
+      type: "price",
+    });
     if (
-      !isValidUsername ||isValidSection||
+      !isValidUsername ||
+      !isValidSection ||
       !isValidName ||
       !isValidDescription ||
-      !isValidImage
+      !isValidImage||
+      !isValidproductType||
+      !isValidPrice
     ) {
-      return new NextResponse("invalid data", { status: 400 });
+      return new NextResponse("invalid data!!", { status: 400 });
     }
     // connect to db
     const client = await MongoClient.connect(
@@ -60,11 +74,13 @@ export async function POST(request: Request) {
     const result = await db.collection("products").insertOne({
       username: username,
       name: name,
+      price: price,
       description: description,
       image: image,
       model: model,
       discount: discount,
-      section:section
+      section: section,
+      date:new Date()
     });
     // close connection
     await client.close();

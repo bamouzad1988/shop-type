@@ -39,7 +39,7 @@ function Category({listItems,title}:ListItemProps) {
           <MenuItem value={"-1"}>{title}</MenuItem>
           {listItems &&
             listItems.map((item) => {
-              return <MenuItem value={item}>{item}</MenuItem>;
+              return <MenuItem key={item} value={item}>{item}</MenuItem>;
             })}
         </Select>
       </FormControl>

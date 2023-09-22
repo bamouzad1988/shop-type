@@ -1,5 +1,8 @@
-import { RegisterValidation } from "@/types/props.module";
-
+// axios
+import axios, { AxiosResponse } from "axios";
+// types
+import {  FetchResult, RegisterValidation } from "@/types/props.module";
+// check validation by type and min lenght
 export const validation = (params: RegisterValidation) => {
   const characterRgx = /^[A-Za-z][A-Za-z0-9]*$/;
   const { data, minLength, type } = params;
@@ -7,7 +10,7 @@ export const validation = (params: RegisterValidation) => {
   if (!trimedData || trimedData.length < minLength) {
     return false;
   }
-  if (type !== "email" && !data.match(characterRgx)) {
+  if ((type === "username"||type === "password") && !data.match(characterRgx)) {
     return false;
   }
   if (
@@ -20,6 +23,7 @@ export const validation = (params: RegisterValidation) => {
 
   return true;
 };
+// return persian message
 export const returnPersianMessage = (text: string) => {
   switch (text) {
     case "not athenticated":
@@ -32,7 +36,7 @@ export const returnPersianMessage = (text: string) => {
       return "کاربر مورد نظز یافت نشد.";
     case "old password is inccorect":
       return "کلمه عبور قبلی مطابقت ندارد.";
-    case "invalid data":
+    case "invalid data!!":
       return "اطلاعات وارد شده صحیح نمی باشد.";
     case "you signed before":
       return "این نام کاربری قبلا توسط کاربر دیگری استفاده شده است.";
@@ -41,3 +45,26 @@ export const returnPersianMessage = (text: string) => {
       return "مشکلی پیش آمده لطفا مجددا تلاش کنید.";
   }
 };
+// axios request handler
+export async function fetchFromAxios<T>(
+  url: string,
+  method: string,
+  payload: Record<string | number, any> = {}
+): Promise<FetchResult<T>> {
+  const controller = new AbortController();
+  try {
+    const response: AxiosResponse<T> = await axios.request({
+      data: payload,
+      signal: controller.signal,
+      method,
+      url,
+    });
+    return { data: response.data, error: null };
+  } catch (error) {
+    return { data: null, error:error.response.data };
+  } finally {
+    controller.abort();
+  }
+}
+
+export default fetchFromAxios;

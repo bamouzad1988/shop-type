@@ -1,19 +1,18 @@
 "use client";
 // react
 import { useEffect, useState } from "react";
-// axios
-import axios from "axios";
 // schema validation
 import { addProductSchema } from "@/lib/yupValidationSchema";
 // react hoock form
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // mui
+import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import {  MenuItem } from "@mui/material";
+import Select from "@mui/material/Select";
+import { FormControlLabel, MenuItem } from "@mui/material";
 // components
 import CustomContainer from "../components/layout/CustomContainer";
 import MuiRtlWrapper from "@/app/components/reusableComponents/MuiRtlWrapper";
@@ -25,7 +24,7 @@ import Image from "next/image";
 import Logo from "@/public/images/logo.png";
 // Components
 import ShowMessage from "../components/reusableComponents/ShowMessage";
-import { returnPersianMessage } from "@/lib/helpers";
+import fetchFromAxios, { returnPersianMessage } from "@/lib/helpers";
 // interface
 import { AddProductInputs } from "@/types/props.module";
 
@@ -34,6 +33,7 @@ const schema = addProductSchema;
 function AddProduct() {
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   const { data: session, status } = useSession();
 
@@ -47,17 +47,10 @@ function AddProduct() {
     } else if (status !== "loading" && status === "authenticated") {
     }
   }, [status]);
-  // set defaultvalue for site section
-  useEffect(() => {
-    //  if user is not login redirect to home page
-    if (status !== "loading" && status !== "authenticated") {
-      redirect("/");
-    } else if (status !== "loading" && status === "authenticated") {
-    }
-  }, [status]);
   // setting form input initial values
   const {
     control,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -67,18 +60,22 @@ function AddProduct() {
       description: "",
       image: "",
       section: "عمومی",
+      productType: "پوشاک",
       discount: 0,
+      price: 1,
     },
     resolver: yupResolver(schema),
   });
   // form submition
-  const onSubmit: SubmitHandler<AddProductInputs> = ({
+  const onSubmit: SubmitHandler<AddProductInputs> = async ({
     name,
     model,
     description,
     image,
     section,
     discount,
+    price,
+    productType,
   }) => {
     setDisableButton(true);
     setMessage({
@@ -86,57 +83,65 @@ function AddProduct() {
       text: "",
       type: "",
     });
-    //register
-    axios
-      .post(
-        "/api/product/add-product",
-        {
-          username: username,
-          name: name,
-          model: model,
-          description: description,
-          image: image,
-          discount: discount,
-          section: section,
-        },
-        {
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          setMessage({
-            status: true,
-            text: "ثبت کالا با موفقیت انجام شد.",
-            type: "success",
-          });
-        }
-      })
-      .catch(function (error) {
-        const hasError = error?.response?.data;
-        if (hasError) {
-          const errorText = returnPersianMessage(hasError);
-          setMessage({
-            status: true,
-            text: errorText,
-            type: "error",
-          });
-        } else {
-          setMessage({
-            status: true,
-            text: "مشکلی پیش آمده لطفا مجددا تلاش کنید.",
-            type: "error",
-          });
-        }
-      })
-      .finally(() => setDisableButton(false));
-  };
+    const { data, error } = await fetchFromAxios(
+      "/api/product/add-product",
+      "post",
+      {
+        username: username,
+        name: name,
+        model: model,
+        description: description,
+        image: image,
+        discount: discount,
+        price: price,
+        section: section,
+        productType: productType,
+      }
+    );
 
+    if (data) {
+      setMessage({
+        status: true,
+        text: "ثبت کالا با موفقیت انجام شد.",
+        type: "success",
+      });
+      if (checked) {
+        reset();
+      }
+    } else if (error) {
+      const errorText = returnPersianMessage(error);
+      setMessage({
+        status: true,
+        text: errorText,
+        type: "error",
+      });
+    } else {
+      setMessage({
+        status: true,
+        text: "مشکلی پیش آمده لطفا مجددا تلاش کنید!",
+        type: "success",
+      });
+    }
+    setDisableButton(false);
+  };
+  // handle checkbox status
+  const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+  };
+  // error tag(p) classes
   const errorTagClasses = "mt-2 text-sm text-custom-main";
-// list for site section
-  const listItems = ["عمومی","کالای دیجیتال", "پوشاک", "لوازم منزل", "کیف", "کفش"];
+  // list for site section
+  const siteSectionListItems = [
+    "عمومی",
+    "بنر",
+    "پرفروشترین",
+    "اسلایدر",
+    "بیشترین بازدید",
+    "بیشترین تخفیف",
+    "پیشنهاد ویژه",
+  ];
+  // list for product types
+  const productTypeListItems = ["پوشاک", "سایر", "کیف", "کفش"];
   if (status === "loading") {
     return;
   }
@@ -154,6 +159,15 @@ function AddProduct() {
             <h2 className="text-right font-iransans-demibold mb-3">
               فرم ثبت کالای جدید
             </h2>
+            {/* checkbox */}
+            <FormControlLabel
+              className="text-sm text-custom-textSecondary"
+              label="فرم پس از ثبت خالی شود"
+              control={
+                <Checkbox checked={checked} onChange={handleChangeCheckbox} />
+              }
+            />
+
             {/* name */}
             <div>
               <Controller
@@ -216,26 +230,82 @@ function AddProduct() {
               />
               <p className={errorTagClasses}>{errors.image?.message}</p>
             </div>
-            {/* section */}
-            <p className="m-0 relative top-3 text-sm text-custom-textSecondary">
-                    <label>بخش نمایش</label>
-            </p>
+            {/* site section */}
+            <div>
+              <p className="mb-1 relative text-sm text-custom-textSecondary">
+                <label>بخش نمایش</label>
+              </p>
+              <div>
+                <Controller
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      size="small"
+                      className="w-full"
+                      defaultValue="عمومی"
+                    >
+                      {siteSectionListItems &&
+                        siteSectionListItems.map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  )}
+                  control={control}
+                  name="section"
+                />
+                <p className={errorTagClasses}>{errors.section?.message}</p>
+              </div>
+            </div>
+            {/* product type */}
+            <div>
+              <p className="m-1 relative text-sm text-custom-textSecondary">
+                <label>دسته بندی کالا</label>
+              </p>
+              <div>
+                <Controller
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      size="small"
+                      className="w-full"
+                      defaultValue="پوشاک"
+                    >
+                      {productTypeListItems &&
+                        productTypeListItems.map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  )}
+                  control={control}
+                  name="productType"
+                />
+                <p className={errorTagClasses}>{errors.productType?.message}</p>
+              </div>
+            </div>
+            {/* "price" */}
             <div>
               <Controller
-                render={({ field }) => (
-                  <Select
-                    {...field}   
-                    size="small"
-                    className="w-full"
-                    defaultValue='عمومی'
-                  >
-                    {listItems&&listItems.map(item=><MenuItem value={item}>{item}</MenuItem>)}
-                  </Select>
-                )}
+                name="price"
                 control={control}
-                name="section"
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="w-full"
+                    InputProps={{
+                      sx: { borderRadius: 1, height: 40 },
+                    }}
+                    label="قیمت(تومان)"
+                    variant="outlined"
+                    type="number"
+                    size="small"
+                  />
+                )}
               />
-              <p className={errorTagClasses}>{errors.section?.message}</p>
+              <p className={errorTagClasses}>{errors.price?.message}</p>
             </div>
             {/* "discount" */}
             <div>

@@ -50,13 +50,19 @@ export interface ListItemProps{
   listItems:string[];
   title:string
 }
+export interface FetchResult<T> {
+  data: T | null;
+  error: string | null;
+}
 export interface AddProductInputs {
   name: string;
   model: string;
   description: string;
   image: string;
   section: string;
+  productType: string;
   discount: number;
+  price: number;
 }
 export interface responsiveDialogProps {
   text: string;
