@@ -87,10 +87,21 @@ export interface BannerProps {
   link: string;
   alt: string;
   linkText: string;
-  image: StaticImport;
+  image: string;
 
 }
-
+export interface ProductOjectFromDB {
+  _id: any;
+  username: string;
+  name: string;
+  description: string;
+  image: string;
+  model?: string;
+  discount: number;
+  section: string;
+  date: Date;
+  price?: number;
+}
 export type Events<Value = string> =
   | (Event & { target: { value: Value; name: string } })
   | React.ChangeEvent<HTMLAnchorElement>
