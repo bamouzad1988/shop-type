@@ -21,8 +21,8 @@ import Logo from "@/public/images/logo.png";
 // react
 import { useEffect, useState } from "react";
 // Components
-import ShowMessage from "../components/reusableComponents/ShowMessage";
-import CustomContainer from "../components/layout/CustomContainer";
+import ShowMessage from "../../components/reusableComponents/ShowMessage";
+import CustomContainer from "../../components/layout/CustomContainer";
 import { postAxios, returnPersianMessage } from "@/lib/helpers";
 
 interface IFormInput {

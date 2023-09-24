@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // axios
 import axios from "axios";
 // yup
-import { changePasswordValidationSchema } from "./../../lib/yupValidationSchema";
+import { changePasswordValidationSchema } from "../../../lib/yupValidationSchema";
 // react hoock form
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,15 +12,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 // components
-import MuiRtlWrapper from "../components/reusableComponents/MuiRtlWrapper";
-import CustomContainer from "../components/layout/CustomContainer";
+import MuiRtlWrapper from "../../components/reusableComponents/MuiRtlWrapper";
+import CustomContainer from "../../components/layout/CustomContainer";
 // next
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 // files
 import Logo from "@/public/images/logo.png";
-import ShowMessage from "../components/reusableComponents/ShowMessage";
+import ShowMessage from "../../components/reusableComponents/ShowMessage";
 import { returnPersianMessage } from "@/lib/helpers";
 
 interface IFormInput {
@@ -29,9 +29,7 @@ interface IFormInput {
   newPasswordRepeat: string;
 }
 const schema = changePasswordValidationSchema;
-
 // type FormData = yup.InferType<typeof schema>;
-
 function ChangePassword() {
   // get user sessin
   const { data: session, status } = useSession();

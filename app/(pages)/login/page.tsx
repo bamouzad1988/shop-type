@@ -1,4 +1,4 @@
-import AuthForm from "../components/authForm/AuthForm";
+import AuthForm from "../../components/authForm/AuthForm";
 import { getServerSession } from "next-auth/next";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation";

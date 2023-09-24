@@ -14,7 +14,7 @@ import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import Select from "@mui/material/Select";
 import { FormControlLabel, MenuItem } from "@mui/material";
 // components
-import CustomContainer from "../components/layout/CustomContainer";
+import CustomContainer from "../../components/layout/CustomContainer";
 import MuiRtlWrapper from "@/app/components/reusableComponents/MuiRtlWrapper";
 // next
 import { useSession } from "next-auth/react";
@@ -23,11 +23,11 @@ import Image from "next/image";
 // files
 import Logo from "@/public/images/logo.png";
 // Components
-import ShowMessage from "../components/reusableComponents/ShowMessage";
+import ShowMessage from "../../components/reusableComponents/ShowMessage";
 import  {postAxios, returnPersianMessage } from "@/lib/helpers";
 // interface
 import { AddProductInputs } from "@/types/props.module";
-import Loader from "../components/reusableComponents/Loader";
+import Loader from "../../components/reusableComponents/Loader";
 
 const schema = addProductSchema;
 

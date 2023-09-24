@@ -121,3 +121,17 @@ export type Events<Value = string> =
   | (Event & { target: { value: Value; name: string } })
   | React.ChangeEvent<HTMLAnchorElement>
   | HTMLAnchorElement;
+// redux store
+export interface CartSliceStateItem {
+  id: string;
+  name: string;
+  count: number;
+  price: number;
+  totalAmount?: number;
+  image: string;
+}
+
+export interface CartSliceInitialState {
+  totalAmount: number;
+  items: CartSliceStateItem[];
+}

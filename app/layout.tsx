@@ -11,13 +11,14 @@ import Footer from "./components/layout/footer/Footer";
 import NextAuthProvider from "./components/reusableComponents/NextAuthProvider";
 // route
 import { options } from "./api/auth/[...nextauth]/options";
+import ReduxProvider from "./store/ReduxProvider";
+// REDUX
 
 export const metadata: Metadata = {
   title: "Nice Shop",
   description: "Created By Nice Shop Team",
 };
 
-//TODO
 export default async function RootLayout({
   children,
 }: {
@@ -28,9 +29,11 @@ export default async function RootLayout({
     <html lang="fa" dir="rtl">
       <body>
         <NextAuthProvider session={session}>
-          <MyHeader />
-          {children}
-          <Footer />
+          <ReduxProvider>
+            <MyHeader />
+            {children}
+            <Footer />
+          </ReduxProvider>
         </NextAuthProvider>
       </body>
     </html>
