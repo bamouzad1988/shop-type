@@ -29,10 +29,12 @@ export interface TreandingTabProps {
 }
 
 export interface BestsellingProps {
-  title: string;
   discount?: number;
+  title: string;
   price: number;
-  image: StaticImport;
+  link: string;
+  alt:string
+  image: string;
 }
 export interface ShopServiceProps {
   iconClass: string;
@@ -46,9 +48,9 @@ export interface LinkLists {
   text: string;
   link: string;
 }
-export interface ListItemProps{
-  listItems:string[];
-  title:string
+export interface ListItemProps {
+  listItems: string[];
+  title: string;
 }
 export interface FetchResult<T> {
   data: T | null;
@@ -88,8 +90,16 @@ export interface BannerProps {
   alt: string;
   linkText: string;
   image: string;
-
 }
+export type GetDataBySectionResult =
+  | {
+      success: true;
+      data:ProductOjectFromDB[]| [];
+    }
+  | {
+      success: false;
+      error: string;
+    };
 export interface ProductOjectFromDB {
   _id: any;
   username: string;

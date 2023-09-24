@@ -12,12 +12,12 @@ function TreandingTabs() {
   return (
     <div className="justify-center my-7 flex">
       <TreandingTab
-        title="مردانه"
+        title="همه"
         isActive={activeTab === 0}
         onClick={() => handleTabClick(0)}
       />
       <TreandingTab
-        title="موبایل"
+        title="پوشاک"
         isActive={activeTab === 1}
         onClick={() => handleTabClick(1)}
       />
@@ -27,19 +27,14 @@ function TreandingTabs() {
         onClick={() => handleTabClick(2)}
       />
       <TreandingTab
-        title="لپ تاپ"
+        title="کفش"
         isActive={activeTab === 3}
         onClick={() => handleTabClick(3)}
       />
       <TreandingTab
-        title="مانیتور"
+        title="سایر"
         isActive={activeTab === 4}
         onClick={() => handleTabClick(4)}
-      />
-      <TreandingTab
-        title="مودم"
-        isActive={activeTab === 5}
-        onClick={() => handleTabClick(5)}
       />
     </div>
   );

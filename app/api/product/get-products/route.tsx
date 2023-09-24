@@ -1,7 +1,10 @@
+// mongo db
 import { MongoClient } from "mongodb";
+// types
+import { GetDataBySectionResult, ProductOjectFromDB } from "@/types/props.module";
 
 
-export async function getDataBySection(section:string) {
+export async function getDataBySection(section:string): Promise<GetDataBySectionResult> {
   const dbUsername = process.env.MONGOUSERNAME;
   const dbPassword = process.env.MONGOPASSWORD;
   try {
@@ -11,11 +14,11 @@ export async function getDataBySection(section:string) {
       );
       const db = client.db("niceshop");
     // get Data
-    const result = await db.collection("products").find({ section: section}).toArray();
+    const result = await db.collection("products").find({ section: section}).toArray()as ProductOjectFromDB[];
     // close connection
     await client.close();
-    return (result);
+    return {data:result ,success:true};
   } catch (error) {
-    return "server error in getting data";
+    return {success:false,error:"server error in getting data"};
   }
 }

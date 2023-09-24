@@ -142,7 +142,7 @@ function AddProduct() {
     "پیشنهاد ویژه",
   ];
   // list for product types
-  const productTypeListItems = ["پوشاک", "سایر", "کیف", "کفش"];
+  const productTypeListItems = ["پوشاک", "کیف", "کفش", "سایر"];
   if (status === "loading") {
     return<Loader size='4rem'/>
   }

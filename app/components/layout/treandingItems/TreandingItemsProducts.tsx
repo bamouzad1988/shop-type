@@ -1,60 +1,36 @@
-"use client";
+// components
 import TreandingProduct from "../../treandingItems/TreandingProduct";
-import myImage12 from "@/public/images/products/p12.jpg";
-import myImage14 from "@/public/images/products/p14.jpg";
-import myImage16 from "@/public/images/products/p16.jpg";
-import myImage2 from "@/public/images/products/p2.jpg";
-// import myImage from "@/public/images/products/";
+// interfaces
+import { ProductOjectFromDB } from "@/types/props.module";
 
-function TreandingItemsProducts() {
+function TreandingItemsProducts(props: {
+  products: [] | ProductOjectFromDB[];
+}) {
   return (
     <div className="flex flex-wrap justify-start mt-10">
-      <TreandingProduct
-        discount={10}
-        title="کلاه مردانه لبه دار"
-        price={313513651}
-        image={myImage12}
-      />
-      <TreandingProduct
-        title="لباس خواب زنامه جیبدار"
-        price={313513651}
-        image={myImage14}
-      />
-      <TreandingProduct
-        discount={18}
-        title="عینک خواب زنامه جیبدار"
-        price={313513651}
-        image={myImage16}
-      />
-      <TreandingProduct
-        discount={35}
-        title="لباس خواب زنامه بدون جیب"
-        price={313513651}
-        image={myImage2}
-      />
-      <TreandingProduct
-        discount={71}
-        title="کلاه مردانه لبه دار"
-        price={313513651}
-        image={myImage12}
-      />
-      <TreandingProduct
-        discount={10}
-        title="عینک خواب زنامه جیبدار"
-        price={313513651}
-        image={myImage16}
-      />
-      <TreandingProduct
-        discount={10}
-        title="عینک خواب زنامه جیبدار"
-        price={313513651}
-        image={myImage16}
-      />
-      <TreandingProduct
-        title="لباس خواب زنامه بدون جیب"
-        price={313513651}
-        image={myImage2}
-      />
+      {props.products.map((item: ProductOjectFromDB, index: number) => {
+        const name = item.name;
+        const model = item.model;
+        // if there is model add it to title
+        const nameAndModel = model ? `${name} مدل ${model}` : name;
+        // convert title to text that use in url as slug
+        const convertedTitle = nameAndModel
+          .replaceAll(" ", "_")
+          .replaceAll("?", "@")
+          .replaceAll("&", "@");
+        const id = item._id.toString();
+        return (
+          <TreandingProduct
+            discount={item.discount}
+            title={nameAndModel}
+            price={item.price}
+            link={`/product/${convertedTitle}?id=${id}`}
+            alt={name}
+            image={item.image}
+          />
+        );
+      })}
+    
     </div>
   );
 }

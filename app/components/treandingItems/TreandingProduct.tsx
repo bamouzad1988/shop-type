@@ -12,18 +12,21 @@ import Percent from "../reusableComponents/Percent";
 import { seprateNumbers } from "../../../lib/functions";
 
 function TreandingProduct(props: BestsellingProps) {
-  const { discount, title, price, image } = props;
-
-  const sepratedPrice = seprateNumbers(price);
+  const { discount, title, price, image,link,alt } = props;
+  const sepratedPrice = price?seprateNumbers(price):seprateNumbers(15651651);
 
   return (
     <div className="treanding-product px-3 my-4 w-full md:w-1/3 xxl:w-1/4 h-auto relative">
-      <Link href="#" className="h-full group block overflow-hidden">
+      <Link href={link} className="h-full group block overflow-hidden" target="_blank">
         <Image
-          src={image}
-          alt={title}
           className="h-full w-full group-hover:scale-110 transition-all duration-300"
+          src={image}
+          alt={alt}
+          width={0}
+          height={0}
+          sizes="100%"
           loading="lazy"
+          style={{ width: "100%", height: "auto" }}
         />
       </Link>
       <div className=" p-2 bg-custom-border">
@@ -33,12 +36,12 @@ function TreandingProduct(props: BestsellingProps) {
           <Toman />
         </div>
       </div>
-      {discount && (
-        <span className="text-custom-white bg-custom-main px-2 py-1 font-iransans-demibold text-xs rounded-lg absolute top-3 right-6">
+      {discount ? (
+        <div className="text-custom-white bg-custom-main px-2 py-1 font-iransans-demibold text-xs rounded-lg absolute top-3 right-6">
           <Percent />
           {discount}
-        </span>
-      )}
+        </div>
+      ):null}
       <div className="cursor-pointer absolute top-3 left-7 text-custom-white bg-custom-main px-2 rounded-lg transition-colors duration-300 hover:bg-custom-textSecondary">
         <ShoppingCartOutlinedIcon className="text-base" />
       </div>
@@ -47,3 +50,7 @@ function TreandingProduct(props: BestsellingProps) {
 }
 
 export default TreandingProduct;
+function typeOf(discount: number): any {
+  throw new Error("Function not implemented.");
+}
+
