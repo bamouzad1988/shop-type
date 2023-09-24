@@ -11,23 +11,27 @@ import { seprateNumbers } from "@/lib/functions";
 import { SuggestionProps } from "@/types/props.module";
 
 function SuggestionProduct(props: SuggestionProps) {
-  const { title, price, image, discount } = props;
-  const output = seprateNumbers(price);
+  const { title, price, image, discount,link } = props;
+  const output =price? seprateNumbers(price):seprateNumbers(351155525);
 
   return (
     <div className="suggestion-product relative flex p-2 justify-between border-custom-border border mt-2">
       <div className="suggestion-product-image">
-        <Image
+        {/* TODO */}
+        <img
           src={image}
-          alt="dssad"
-          className="w-full h-full"
+          alt={title}
+          width={0}
+          height={0}
+          sizes="100%"
+          style={{ width: "100%", height: "100%" }}
           loading="lazy"
         />
       </div>
       <div className="w-[45%] pt-16">
         <h4 className="leading-5">
           <Link
-            href="#"
+            href={link}
             className="transition-colors duration-300 hover:text-custom-main text-custom-text text-sm font-iransans-demibold"
           >
             {title}

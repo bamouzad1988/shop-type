@@ -1,8 +1,23 @@
+// functions
+import { getDataBySection } from "@/app/api/product/get-products/route";
+// components
 import Title from "../../reusableComponents/Title";
 import CustomContainer from "../CustomContainer";
 import SuggestionList from "./SuggestionList";
-// const data = [{ image: "", title: "", price: "", discount: 20, id: "" }];
-function Suggestion() {
+import Loader from "../../reusableComponents/Loader";
+
+async function Suggestion() {
+  const mostDiscountResponse = await getDataBySection("بیشترین تخفیف");
+  const mostVisitResponse = await getDataBySection("بیشترین بازدید");
+  const speciaResponse = await getDataBySection("پیشنهاد ویژه");
+
+  const mostDiscountResponseHasData =
+    mostDiscountResponse.success && mostDiscountResponse.data.length;
+  const mostVisitResponseHasData =
+    mostVisitResponse.success && mostVisitResponse.data.length;
+  const speciaResponseHasData =
+    speciaResponse.success && speciaResponse.data.length;
+
   return (
     <CustomContainer>
       <div className="flex justify-start flex-wrap">
@@ -13,7 +28,11 @@ function Suggestion() {
             hasUnderline={true}
             title="بیشترین تخفیف"
           />
-          <SuggestionList />
+          {mostDiscountResponseHasData ? (
+            <SuggestionList products={mostDiscountResponse.data} />
+          ) : (
+            <Loader size={"2rem"} />
+          )}
         </div>
         <div className="px-3 mt-5 lg:w-1/3 md:w-1/2 xxs:w-full">
           <Title
@@ -22,7 +41,11 @@ function Suggestion() {
             hasUnderline={true}
             title="بیشترین بازدید"
           />
-          <SuggestionList />
+          {mostVisitResponseHasData ? (
+            <SuggestionList products={mostVisitResponse.data} />
+          ) : (
+            <Loader size={"2rem"} />
+          )}
         </div>
         <div className="px-3 mt-5 lg:w-1/3 md:w-1/2 xxs:w-full">
           <Title
@@ -31,7 +54,11 @@ function Suggestion() {
             hasUnderline={true}
             title="پیشنهاد ویژه"
           />
-          <SuggestionList discount={15} />
+          {speciaResponseHasData ? (
+            <SuggestionList products={speciaResponse.data} />
+          ) : (
+            <Loader size={"2rem"} />
+          )}
         </div>
       </div>
     </CustomContainer>

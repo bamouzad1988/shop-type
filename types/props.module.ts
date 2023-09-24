@@ -86,8 +86,7 @@ export interface SlideProductProps  {
   title:string;
 }
 
-export interface SuggestionProps extends BestsellingProps {
-  discount?: number;
+export interface SuggestionProps extends SlideProductProps {
 }
 export interface BannerProps {
   overTitle: string;

@@ -1,4 +1,4 @@
-export const revalidate = 1000 
+export const revalidate = 5000 
 // next
 import { Suspense } from 'react'
 // components
