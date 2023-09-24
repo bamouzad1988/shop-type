@@ -78,7 +78,13 @@ export interface ListLinkProps {
   title: string;
   list: { text: string; link: string }[];
 }
-export interface SlideProductProps extends BestsellingProps {}
+export interface SlideProductProps  {
+  link:string;
+  price:number;
+  discount:number;
+  image:string;
+  title:string;
+}
 
 export interface SuggestionProps extends BestsellingProps {
   discount?: number;

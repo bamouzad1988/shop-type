@@ -46,4 +46,3 @@ async function Banners() {
 }
 
 export default Banners;
-export const revalidate = 1000 

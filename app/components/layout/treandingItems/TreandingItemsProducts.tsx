@@ -3,12 +3,12 @@ import TreandingProduct from "../../treandingItems/TreandingProduct";
 // interfaces
 import { ProductOjectFromDB } from "@/types/props.module";
 
-function TreandingItemsProducts(props: {
+function TreandingItemsProducts({products}: {
   products: [] | ProductOjectFromDB[];
 }) {
   return (
     <div className="flex flex-wrap justify-start mt-10">
-      {props.products.map((item: ProductOjectFromDB, index: number) => {
+      {products.map((item: ProductOjectFromDB, index: number) => {
         const name = item.name;
         const model = item.model;
         // if there is model add it to title

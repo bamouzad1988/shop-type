@@ -4,9 +4,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Loader({size}) {
   return (
-    <div className="text-center my-10 text-custom-main">
-
-    <CircularProgress color="inherit" size={size} className="mx-3" />;
+    <div className={`text-center my-10`}>
+    <CircularProgress color="inherit" size={size} className="mx-3" />
     </div>
   )
 }
