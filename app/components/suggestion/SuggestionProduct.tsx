@@ -39,9 +39,9 @@ function SuggestionProduct(props: SuggestionProps) {
         </div>
       </div>
       {discount && (
-        <span className="text-custom-white bg-custom-main px-2 py-1 font-iransans-demibold text-xs rounded-lg absolute top-2 left-3">
-          <Percent />
+        <span className="flex text-custom-white bg-custom-main px-2 py-1 font-iransans-demibold text-xs rounded-lg absolute top-2 left-3">
           {discount}
+          <Percent />
         </span>
       )}
     </div>

@@ -1,4 +1,3 @@
-"use client";
 import Title from "../../reusableComponents/Title";
 import CustomContainer from "../CustomContainer";
 import SuggestionList from "./SuggestionList";
