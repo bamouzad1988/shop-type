@@ -78,6 +78,3 @@ function TreandingProduct(props: BestsellingProps) {
 }
 
 export default TreandingProduct;
-function typeOf(discount: number): any {
-  throw new Error("Function not implemented.");
-}

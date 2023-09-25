@@ -28,7 +28,7 @@ export const cartSlice = createSlice({
           count,
           price,
           totalAmount: count * price,
-          image: action.payload.image,
+          image,
         });
       }
 

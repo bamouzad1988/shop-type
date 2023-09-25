@@ -54,7 +54,6 @@ export async function postAxios<T>(
   const controller = new AbortController();
   try {
  
-    console.log(method);
     const response: AxiosResponse<T> = await axios.request({
       data: payload,
       signal: controller.signal,

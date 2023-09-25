@@ -33,7 +33,7 @@ export interface BestsellingProps {
   title: string;
   price: number;
   link: string;
-  alt:string
+  alt: string;
   image: string;
 }
 export interface ShopServiceProps {
@@ -78,16 +78,15 @@ export interface ListLinkProps {
   title: string;
   list: { text: string; link: string }[];
 }
-export interface SlideProductProps  {
-  link:string;
-  price:number;
-  discount:number;
-  image:string;
-  title:string;
+export interface SlideProductProps {
+  link: string;
+  price: number;
+  discount: number;
+  image: string;
+  title: string;
 }
 
-export interface SuggestionProps extends SlideProductProps {
-}
+export interface SuggestionProps extends SlideProductProps {}
 export interface BannerProps {
   overTitle: string;
   title: string;
@@ -99,7 +98,7 @@ export interface BannerProps {
 export type GetDataBySectionResult =
   | {
       success: true;
-      data:ProductOjectFromDB[]| [];
+      data: ProductOjectFromDB[] | [];
     }
   | {
       success: false;
@@ -121,6 +120,14 @@ export type Events<Value = string> =
   | (Event & { target: { value: Value; name: string } })
   | React.ChangeEvent<HTMLAnchorElement>
   | HTMLAnchorElement;
+// cart
+export interface CartProductProps {
+  title: string;
+  price: number;
+  count: number;
+  image: string;
+  id: string;
+}
 // redux store
 export interface CartSliceStateItem {
   id: string;
