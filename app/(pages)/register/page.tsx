@@ -39,8 +39,9 @@ function Register() {
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
   const [redirectPage, setRedirectPage] = useState(false);
-  // Import AbortController from 'abort-controller'
-  const { signal, abort } = new AbortController();
+ // Create an AbortController instance
+ const abortController = new AbortController();
+ const signal = abortController.signal;
   // if user is login redirect to home page
   if (session) {
     redirect("/");
@@ -55,9 +56,9 @@ function Register() {
   //  Implement cleanup logic to cancel the request when unmounting
     return () => {
       //  Call abort() to cancel the request
-      abort(); 
+      abortController.abort(); 
     };
-  }, []);
+  }, [abortController]);
   const {
     control,
     handleSubmit,

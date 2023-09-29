@@ -1,7 +1,7 @@
 "use client";
 // next
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import Image from "next/image";
 // mui
 import Badge from "@mui/material/Badge";
 // redux
@@ -9,6 +9,7 @@ import { useAppSelector } from "@/app/store/store";
 import CartProduct from "../../reusableComponents/CartProduct";
 
 function Card() {
+  const { data: session } = useSession();
   const itemsSelector = useAppSelector((state) => state.cart.items);
   const totalAmountSelector = useAppSelector(
     (state) => state.cart.totalAmount
@@ -21,6 +22,9 @@ function Card() {
       " absolute top-[20px] z-20 origin-top scale-y-0 left-0 cursor-default w-[300px] bg-custom-white p-8 shadow-md hover:scale-y-100 transition-all duration-300 ",
   };
 
+  if (!session) {
+    return null
+  }
   if (!productsLength) {
     return (
       <div className="relative ">
