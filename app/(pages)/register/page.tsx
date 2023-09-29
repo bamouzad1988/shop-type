@@ -1,6 +1,4 @@
 "use client";
-// axios
-import axios from "axios";
 // schema validation
 import { registerValidationSchema } from "@/lib/yupValidationSchema";
 // react hoock form
@@ -24,6 +22,8 @@ import { useEffect, useState } from "react";
 import ShowMessage from "../../components/reusableComponents/ShowMessage";
 import CustomContainer from "../../components/layout/CustomContainer";
 import { postAxios, returnPersianMessage } from "@/lib/helpers";
+// axios
+import axios from "axios";
 
 interface IFormInput {
   username: string;
@@ -39,6 +39,8 @@ function Register() {
   const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
   const [redirectPage, setRedirectPage] = useState(false);
+  // Import AbortController from 'abort-controller'
+  const { signal, abort } = new AbortController();
   // if user is login redirect to home page
   if (session) {
     redirect("/");
@@ -49,7 +51,13 @@ function Register() {
       redirect("/login");
     }
   }, [redirectPage]);
-
+  useEffect(() => {
+  //  Implement cleanup logic to cancel the request when unmounting
+    return () => {
+      //  Call abort() to cancel the request
+      abort(); 
+    };
+  }, []);
   const {
     control,
     handleSubmit,
@@ -62,10 +70,7 @@ function Register() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = async ({
-    username,
-    password,
-  }) => {
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     setDisableButton(true);
     setMessage({
       status: false,
@@ -73,12 +78,10 @@ function Register() {
       type: "",
     });
     //register
-    const { data, error } = await postAxios("/api/auth/register", "post", {
-      username: username,
-      password: password,
-    });
+    try {
+    const { data:response, error } = await postAxios("/api/auth/register", "post", data,signal);
 
-    if (data) {
+    if (response) {
       setMessage({
         status: true,
         text: "ثبت نام با موفقیت انجام شد.",
@@ -100,7 +103,21 @@ function Register() {
       });
       setDisableButton(false);
     }
-  };
+  } catch (error) {
+    // Handle errors (e.g., network errors) here
+    if (axios.isCancel(error)) {
+      // Request was cancelled, no action needed
+    } else {
+      setMessage({
+        status: true,
+        text: "مشکلی پیش آمده لطفا مجددا تلاش کنید!",
+        type: "error",
+      });
+      setDisableButton(false);
+    }
+  }
+};
+
 
   const errorTagClasses = "mt-2 text-sm text-custom-main";
   return (

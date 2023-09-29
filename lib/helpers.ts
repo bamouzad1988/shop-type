@@ -49,45 +49,52 @@ export const returnPersianMessage = (text: string) => {
 export async function postAxios<T>(
   url: string,
   method: string,
-  payload: Record<string | number, any> = {}
+  payload: Record<string | number, any> = {},
+  cancelToken?: AbortSignal // Add a cancelToken parameter
 ): Promise<FetchResult<T>> {
   const controller = new AbortController();
+  const signal = cancelToken || controller.signal; // Use provided cancelToken or create a new one
+
   try {
- 
     const response: AxiosResponse<T> = await axios.request({
       data: payload,
-      signal: controller.signal,
+      signal, // Set the signal in the request
       method,
       url,
     });
- //TODO
-//  check for canceling requesst
     return { data: response.data, error: null };
   } catch (error) {
-    return { data: null, error:error?.response?.data };
+    return { data: null, error: error?.response?.data };
   } finally {
-    controller.abort();
+    controller.abort(); // Always call abort to clean up resources
   }
 }
-export async function getAxios<T>(
-  url: string,
-  method: string,
-  payload: Record<string | number, any> = {}
-): Promise<FetchResult<T>> {
-  const controller = new AbortController();
-  try {
+
+// export async function getAxios<T>(
+//   url: string,
+//   method: string,
+//   payload: Record<string | number, any> = {}
+// ): Promise<FetchResult<T>> {
+//   const controller = new AbortController();
+//   try {
  
-    const response: AxiosResponse<T> = await axios.request({
-      data: payload,
-      signal: controller.signal,
-      method,
-      url,
-    });
-//  check for canceling requesst
-    return { data: response.data, error: null };
-  } catch (error) {
-    return { data: null, error:error?.response?.data };
-  } finally {
-    controller.abort();
-  }
-}
+//     const response: AxiosResponse<T> = await axios.request({
+//       data: payload,
+//       signal: controller.signal,
+//       method,
+//       url,
+//     });
+// //  check for canceling requesst
+//     return { data: response.data, error: null };
+//   } catch (error) {
+//     if (axios.isCancel(error)) {
+//       // Request was cancelled, no further action needed
+//       return { data: null, error: null };
+//     }else {
+//       // Handle other errors, e.g., network errors
+//       return { data: null, error: error?.response?.data };
+//     }
+//   } finally {
+//     controller.abort();
+//   }
+// }

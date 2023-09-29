@@ -9,9 +9,9 @@ import { useAppSelector } from "@/app/store/store";
 import CartProduct from "../../reusableComponents/CartProduct";
 
 function Card() {
-  const itemsSelector = useAppSelector((state) => state.cartReducer.items);
+  const itemsSelector = useAppSelector((state) => state.cart.items);
   const totalAmountSelector = useAppSelector(
-    (state) => state.cartReducer.totalAmount
+    (state) => state.cart.totalAmount
   );
   const productsLength = itemsSelector.length;
 
