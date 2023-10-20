@@ -22,11 +22,8 @@ export const store = configureStore({
     // Add other reducers as needed
   },
 });
-
 // Create the persistor using persistStore
 export const persistor = persistStore(store);
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

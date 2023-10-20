@@ -6,8 +6,12 @@ import Link from "next/link";
 import { useState } from "react";
 // components
 import ResponsiveDialog from "../../reusableComponents/Dialog";
+//redux
+import { clearCart } from "@/app/store/slices/cartSlice";
+import { useDispatch } from "react-redux";
 
 function TopBar() {
+  const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
   // get user sessin
   const { data: session } = useSession();
@@ -20,6 +24,8 @@ function TopBar() {
   // run after user agree the exit dialog box
   const exitHandler = (text: string) => {
     if (text === "ok") {
+      // cart will empty
+      dispatch(clearCart());
       signOut();
     }
     setShowDialog(false);

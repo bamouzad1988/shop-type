@@ -29,8 +29,9 @@ function CartProduct({ title, price, count, image,id }: CartProductProps) {
       <div>
         <h6 className="text-sm">{title}</h6>
         <div className="text-left my-1  text-custom-textSecondary">
-          <span>{count}x</span>
-          <span>-</span>
+          <span>{count}</span>
+          <span>x</span>
+          {" "}
           <span>{price}</span>
         </div>
         <div className="flex justify-end cursor-pointer" onClick={()=>removeProductHandler()}>
