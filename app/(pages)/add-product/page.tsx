@@ -1,4 +1,6 @@
 "use client";
+// hot toast
+import toast from "react-hot-toast";
 // react
 import { useEffect, useState } from "react";
 // schema validation
@@ -24,7 +26,7 @@ import Image from "next/image";
 import Logo from "@/public/images/logo.png";
 // Components
 import ShowMessage from "../../components/reusableComponents/ShowMessage";
-import  {postAxios, returnPersianMessage } from "@/lib/helpers";
+import { postAxios, returnPersianMessage } from "@/lib/helpers";
 // interface
 import { AddProductInputs } from "@/types/props.module";
 import Loader from "../../components/reusableComponents/Loader";
@@ -32,7 +34,7 @@ import Loader from "../../components/reusableComponents/Loader";
 const schema = addProductSchema;
 
 function AddProduct() {
-  const [message, setMessage] = useState({ status: false, text: "", type: "" });
+  // const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
   const [checked, setChecked] = useState(true);
 
@@ -46,6 +48,7 @@ function AddProduct() {
     if (status !== "loading" && status !== "authenticated") {
       redirect("/");
     } else if (status !== "loading" && status === "authenticated") {
+
     }
   }, [status]);
   // setting form input initial values
@@ -53,7 +56,7 @@ function AddProduct() {
     control,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     defaultValues: {
       name: "",
@@ -65,6 +68,7 @@ function AddProduct() {
       discount: 0,
       price: 1,
     },
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
   // form submition
@@ -79,11 +83,6 @@ function AddProduct() {
     productType,
   }) => {
     setDisableButton(true);
-    setMessage({
-      status: false,
-      text: "",
-      type: "",
-    });
     const { data, error } = await postAxios(
       "/api/product/add-product",
       "post",
@@ -101,27 +100,15 @@ function AddProduct() {
     );
 
     if (data) {
-      setMessage({
-        status: true,
-        text: "ثبت کالا با موفقیت انجام شد.",
-        type: "success",
-      });
+      toast.success("ثبت کالا با موفقیت انجام شد.")
       if (checked) {
         reset();
       }
     } else if (error) {
       const errorText = returnPersianMessage(error);
-      setMessage({
-        status: true,
-        text: errorText,
-        type: "error",
-      });
+      toast.error(errorText)
     } else {
-      setMessage({
-        status: true,
-        text: "مشکلی پیش آمده لطفا مجددا تلاش کنید!",
-        type: "success",
-      });
+      toast.error("مشکلی پیش آمده لطفا مجددا تلاش کنید!")
     }
     setDisableButton(false);
   };
@@ -144,13 +131,10 @@ function AddProduct() {
   // list for product types
   const productTypeListItems = ["پوشاک", "کیف", "کفش", "سایر"];
   if (status === "loading") {
-    return<Loader size='4rem'/>
+    return <Loader size='4rem' />
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="py-10">
-      {message.status && (
-        <ShowMessage text={message.text} type={message.type} />
-      )}
       <MuiRtlWrapper>
         <CustomContainer>
           <div className="max-w-[400px] px-5 flex flex-col m-auto gap-4 py-5 rounded-sm border border-custom-border">
@@ -168,7 +152,6 @@ function AddProduct() {
                 <Checkbox checked={checked} onChange={handleChangeCheckbox} />
               }
             />
-
             {/* name */}
             <div>
               <Controller
@@ -350,7 +333,7 @@ function AddProduct() {
               sx={{ marginTop: 3 }}
               type="submit"
               variant="contained"
-              disabled={disableButton ? true : false}
+              disabled={(!isValid || disableButton)}
             >
               ثبت کالا
             </Button>

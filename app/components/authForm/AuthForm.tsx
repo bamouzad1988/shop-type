@@ -1,4 +1,6 @@
 "use client";
+// hot toast
+import toast from 'react-hot-toast';
 // schema validation
 import { registerValidationSchema } from "@/lib/yupValidationSchema";
 // react hoock form
@@ -10,7 +12,6 @@ import Button from "@mui/material/Button";
 // components
 import MuiRtlWrapper from "@/app/components/reusableComponents/MuiRtlWrapper";
 import CustomContainer from "../layout/CustomContainer";
-import ShowMessage from "../reusableComponents/ShowMessage";
 // next
 import Image from "next/image";
 import { signIn } from "next-auth/react";
@@ -29,28 +30,23 @@ const schema = registerValidationSchema;
 // type FormData = yup.InferType<typeof schema>;
 
 function AuthForm() {
-  const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     defaultValues: {
       username: "",
       password: "",
     },
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<IFormInput> = ({ username, password }) => {
-    setDisableButton(true);
-    setMessage({
-      status: false,
-      text: "",
-      type: "",
-    });
+    setDisableButton(true)
     //register or login
     signIn("credentials", {
       redirect: false,
@@ -59,21 +55,13 @@ function AuthForm() {
     }).then((response) => {
       const error = response.error;
       if (!error) {
-        setMessage({
-          status: true,
-          text: " ورود با موفقیت انجام شد.",
-          type: "success",
-        });
+        toast.success('ورود با موفقیت انجام شد');
         setTimeout(() => {
           window.location.href = "/";
-        }, 6000);
+        }, 4000);
       } else {
-        setMessage({
-          status: true,
-          text: error,
-          type: "error",
-        });
-        setDisableButton(false);
+        toast.error('کاربر مورد نظر یافت نشد!')
+        setDisableButton(false)
       }
     });
   };
@@ -81,9 +69,6 @@ function AuthForm() {
   const errorTagClasses = "mt-2 text-sm text-custom-main";
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="py-10">
-      {message.status && (
-        <ShowMessage text={message.text} type={message.type} />
-      )}
       <MuiRtlWrapper>
         <CustomContainer>
           <div className="max-w-[400px] px-5 flex flex-col m-auto gap-4 py-5 rounded-sm border border-custom-border">
@@ -134,19 +119,17 @@ function AuthForm() {
               sx={{ marginTop: 3 }}
               type="submit"
               variant="contained"
-              disabled={disableButton ? true : false}
+              disabled={(disableButton || !isValid)}
             >
               ورود
             </Button>
-            {!disableButton && (
-              <p className="text-center m-0">
-                برای{" "}
-                <Link className="text-custom-main underline" href="/register">
-                  ثبت نام
-                </Link>{" "}
-                کلیک کنید.
-              </p>
-            )}
+            <p className="text-center m-0">
+              برای{" "}
+              <Link className="text-custom-main underline" href="/register">
+                ثبت نام
+              </Link>{" "}
+              کلیک کنید.
+            </p>
           </div>
         </CustomContainer>
       </MuiRtlWrapper>

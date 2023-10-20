@@ -1,4 +1,6 @@
 "use client";
+// hot toast
+import toast from "react-hot-toast";
 // react
 import { useEffect, useState } from "react";
 // axios
@@ -40,19 +42,19 @@ function ChangePassword() {
     } 
   }, [ status]);
 
-  const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors ,isValid},
   } = useForm({
     defaultValues: {
       newPassword: "",
       oldPassword: "",
       newPasswordRepeat:"",
     },
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
@@ -62,11 +64,6 @@ function ChangePassword() {
     newPasswordRepeat
   }) => {
     setDisableButton(true);
-    setMessage({
-      status: false,
-      text: "",
-      type: "",
-    });
     //register
     axios
       .post(
@@ -85,33 +82,23 @@ function ChangePassword() {
       )
       .then((response) => {
         if (response.status === 200) {
-          setMessage({
-            status: true,
-            text: " تغییر کلمه عبور با موفقیت انجام شد.",
-            type: "success",
-          });
+          toast.success("تغییر کلمه عبور با موفقیت انجام شد.")
+          setDisableButton(false)
         }
       })
       .catch(function (error) {
-        setDisableButton(false)
         const hasError = error?.response?.data;
         if (hasError) {
           const errorText=returnPersianMessage(hasError)
-          setMessage({
-            status: true,
-            text: errorText,
-            type: "error",
-          });
+          toast.error(errorText)
+          setDisableButton(false)
         } 
-      }).finally(()=>setDisableButton(false))
+      })
   };
 
   const errorTagClasses = "mt-2 text-sm text-custom-main";
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="py-10">
-      {message.status && (
-        <ShowMessage text={message.text} type={message.type} />
-      )}
       <MuiRtlWrapper>
         <CustomContainer>
           <div className="max-w-[400px] px-5 flex flex-col m-auto gap-4 py-5 rounded-sm border border-custom-border">
@@ -188,7 +175,7 @@ function ChangePassword() {
               sx={{ marginTop: 3 }}
               type="submit"
               variant="contained"
-              disabled={disableButton ? true : false}
+              disabled={disableButton || !isValid}
             >
               تغییر کلمه عبور
             </Button>

@@ -12,7 +12,8 @@ function CardAndProfile() {
   return (
     <div className="flex items-center">
       <Link
-        href="/profile"
+        title="تغییر کلمه عبور"
+        href="/change-password"
         className="relative  text-custom-textSecondary me-2"
       >
         <AccountBoxIcon

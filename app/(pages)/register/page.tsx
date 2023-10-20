@@ -24,6 +24,8 @@ import CustomContainer from "../../components/layout/CustomContainer";
 import { postAxios, returnPersianMessage } from "@/lib/helpers";
 // axios
 import axios from "axios";
+// hot toast
+import toast from "react-hot-toast";
 
 interface IFormInput {
   username: string;
@@ -35,8 +37,6 @@ const schema = registerValidationSchema;
 
 function Register() {
   const { data: session } = useSession();
-
-  const [message, setMessage] = useState({ status: false, text: "", type: "" });
   const [disableButton, setDisableButton] = useState(false);
   const [redirectPage, setRedirectPage] = useState(false);
  // Create an AbortController instance
@@ -62,70 +62,45 @@ function Register() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors },formState: {  isValid  },
   } = useForm({
     defaultValues: {
       username: "",
       password: "",
-    },
+    },mode: "onChange",
     resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    setDisableButton(true);
-    setMessage({
-      status: false,
-      text: "",
-      type: "",
-    });
+    setDisableButton(true)
     //register
     try {
     const { data:response, error } = await postAxios("/api/auth/register", "post", data,signal);
 
     if (response) {
-      setMessage({
-        status: true,
-        text: "ثبت نام با موفقیت انجام شد.",
-        type: "success",
-      });
+      toast.success('ثبت نام با موفقیت انجام شد');
     } else if (error) {
       const errorText = returnPersianMessage(error);
-      setMessage({
-        status: true,
-        text: errorText,
-        type: "error",
-      });
-      setDisableButton(false);
+      toast.error(errorText);
     } else {
-      setMessage({
-        status: true,
-        text: "مشکلی پیش آمده لطفا مجددا تلاش کنید!",
-        type: "error",
-      });
-      setDisableButton(false);
+      toast.error("مشکلی پیش آمده لطفا مجددا تلاش کنید!");
+      setDisableButton(false)
     }
   } catch (error) {
     // Handle errors (e.g., network errors) here
     if (axios.isCancel(error)) {
       // Request was cancelled, no action needed
+      setDisableButton(false)
     } else {
-      setMessage({
-        status: true,
-        text: "مشکلی پیش آمده لطفا مجددا تلاش کنید!",
-        type: "error",
-      });
-      setDisableButton(false);
+      toast.error("مشکلی پیش آمده لطفا مجددا تلاش کنید!");
+      setDisableButton(false)
     }
   }
 };
 
-
   const errorTagClasses = "mt-2 text-sm text-custom-main";
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="py-10">
-      {message.status && (
-        <ShowMessage text={message.text} type={message.type} />
-      )}
       <MuiRtlWrapper>
         <CustomContainer>
           <div className="max-w-[400px] px-5 flex flex-col m-auto gap-4 py-5 rounded-sm border border-custom-border">
@@ -178,7 +153,7 @@ function Register() {
               sx={{ marginTop: 3 }}
               type="submit"
               variant="contained"
-              disabled={disableButton ? true : false}
+              disabled={(disableButton || !isValid)}
             >
               ثبت نام
             </Button>

@@ -12,7 +12,8 @@ import NextAuthProvider from "./components/reusableComponents/NextAuthProvider";
 // route
 import { options } from "./api/auth/[...nextauth]/options";
 import ReduxProvider from "./store/ReduxProvider";
-// REDUX
+// hot toast
+import toast, { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: "Nice Shop",
@@ -27,9 +28,13 @@ export default async function RootLayout({
   const session = await getServerSession(options);
   return (
     <html lang="fa" dir="rtl">
-      <body>
+      <body dir="rtl">
         <NextAuthProvider session={session}>
           <ReduxProvider>
+          <Toaster
+              position="top-center"
+              reverseOrder={false}
+            />
             <MyHeader />
             {children}
             <Footer />
